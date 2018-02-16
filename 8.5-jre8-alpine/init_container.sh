@@ -16,8 +16,10 @@ echo Printing list of environment variables
 printenv
 echo Done printing environment variables
 
+echo "Setup openrc ..." && openrc && touch /run/openrc/softlevel
+
 echo Starting ssh service
-service ssh start
+rc-service sshd start
 
 # If a custom initialization script is defined, run it and exit.
 if ! [ -z $INIT_SCRIPT ]

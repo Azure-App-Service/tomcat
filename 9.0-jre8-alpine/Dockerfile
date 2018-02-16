@@ -1,4 +1,4 @@
-FROM tomcat:8.5-jre8
+FROM tomcat:9-jre8-alpine
 MAINTAINER Azure App Services Container Images <appsvc-images@microsoft.com>
 
 RUN rm -r /usr/local/tomcat/webapps/
@@ -20,11 +20,10 @@ ENV JAVA_OPTS -Dsite.tempdir=/tmp $JAVA_OPTS
 ENV JAVA_OPTS -Dport.http=80 $JAVA_OPTS
 ENV _JAVA_OPTIONS -Djava.net.preferIPv4Stack=true
 
-RUN apt-get update \
-        && apt-get install -y --no-install-recommends dialog \
-        && apt-get update \
-        && apt-get install -y --no-install-recommends openssh-server \
+RUN apk add --update openssh-server \
         && echo "root:Docker!" | chpasswd \
+        && apk update && apk add openrc \
+        && rm -rf /var/cache/apk/* \
         && chmod 755 /bin/init_container.sh 
 
 EXPOSE 80 2222
