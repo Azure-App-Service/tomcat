@@ -12,17 +12,17 @@ Documentation: http://aka.ms/webapp-linux
 EOL
 cat /etc/motd
 
-echo Printing list of environment variables
+echo Listing environment variables passed to init_container.sh...
 printenv
-echo Done printing environment variables
+echo Finished listing environment variables passed to init_container.sh.
 
 echo "Setup openrc ..." && openrc && touch /run/openrc/softlevel
 
-echo Starting ssh service
+echo Starting ssh service...
 rc-service sshd start
 
 # If a custom initialization script is defined, run it and exit.
-if ! [ -z $INIT_SCRIPT ]
+if [ -n "$INIT_SCRIPT" ]
 then
     echo Running custom initialization script
     source $INIT_SCRIPT
@@ -48,6 +48,19 @@ then
     mkdir -p /home/site/wwwroot
     cp -r /tmp/webapps /home/site/wwwroot
 fi
+
+# WEBSITE_INSTANCE_ID will be defined uniquely for each worker instance while running in Azure.
+# During development it may not be defined, in that case  we set WEBSITE_INSTNACE_ID=dev.
+if [ -z "$WEBSITE_INSTANCE_ID" ]
+then
+    export WEBSITE_INSTANCE_ID=dev
+fi
+
+export JAVA_OPTS="$JAVA_OPTS -Dcatalina.instance.name=$WEBSITE_INSTANCE_ID"
+
+echo Listing environment variables being passed to Tomcat...
+printenv
+echo Finished listing environment variables being passed to Tomcat.
 
 # Start Tomcat
 echo Starting Tomcat with CATALINA_BASE set to \"$CATALINA_BASE\"
