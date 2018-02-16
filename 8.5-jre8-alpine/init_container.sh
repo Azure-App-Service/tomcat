@@ -16,8 +16,10 @@ echo Printing list of environment variables
 printenv
 echo Done printing environment variables
 
+echo "Setup openrc ..." && openrc && touch /run/openrc/softlevel
+
 echo Starting ssh service
-service ssh start
+rc-service sshd start
 
 # If a custom initialization script is defined, run it and exit.
 if ! [ -z $INIT_SCRIPT ]
@@ -41,7 +43,12 @@ then
     export CATALINA_BASE=
 fi
 
+if [ ! -d /home/site/wwwroot/webapps ]
+then
+    mkdir -p /home/site/wwwroot
+    cp -r /tmp/webapps /home/site/wwwroot
+fi
+
 # Start Tomcat
 echo Starting Tomcat with CATALINA_BASE set to \"$CATALINA_BASE\"
 catalina.sh run
-
