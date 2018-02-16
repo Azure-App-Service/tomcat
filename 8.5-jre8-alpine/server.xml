@@ -141,7 +141,7 @@
       </Realm>
 
       <Host name="localhost" appBase="${site.home}/site/wwwroot/webapps" xmlBase="${site.home}/site/wwwroot/"
-            unpackWARs="true" autoDeploy="true" workDir="${site.tempdir}">
+            unpackWARs="false" autoDeploy="true" workDir="${site.tempdir}">
 
         <!-- SingleSignOn valve, share authentication between web applications
              Documentation at: /docs/config/valve.html -->
