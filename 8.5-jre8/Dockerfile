@@ -5,6 +5,7 @@ RUN rm -r /usr/local/tomcat/webapps/
 
 COPY init_container.sh /bin/init_container.sh
 COPY server.xml /usr/local/tomcat/conf/server.xml
+COPY context.xml /usr/local/tomcat/conf/context.xml
 COPY logging.properties /usr/local/tomcat/conf/logging.properties
 COPY index.jsp /tmp/webapps/ROOT/index.jsp
 COPY background.png /tmp/webapps/ROOT/background.png
