@@ -5,11 +5,16 @@ RUN rm -r /usr/local/tomcat/webapps/
 
 COPY init_container.sh /bin/init_container.sh
 COPY server.xml /usr/local/tomcat/conf/server.xml
+COPY web.xml /tmp/tomcat/web.xml
 COPY context.xml /usr/local/tomcat/conf/context.xml
 COPY logging.properties /usr/local/tomcat/conf/logging.properties
 COPY index.jsp /tmp/webapps/ROOT/index.jsp
 COPY background.png /tmp/webapps/ROOT/background.png
 COPY sshd_config /etc/ssh/
+COPY tmp/shared/app_insights/AI-Agent.xml /usr/local/app_insights/aiagent/
+COPY tmp/shared/app_insights/ApplicationInsights.xml /usr/local/app_insights/tomcat_lib/
+
+ENV CATALINA_OPTS -javaagent:/usr/local/app_insights/aiagent/applicationinsights-agent-2.0.2.jar $CATALINA_OPTS
 
 ENV JAVA_OPTS -Djdk.tls.ephemeralDHKeySize=2048 $JAVA_OPTS
 ENV JAVA_OPTS -Djava.protocol.handler.pkgs=org.apache.catalina.webresources $JAVA_OPTS
@@ -26,6 +31,9 @@ RUN apt-get update \
         && apt-get update \
         && apt-get install -y --no-install-recommends openssh-server \
         && echo "root:Docker!" | chpasswd \
+        && wget -O /usr/local/app_insights/tomcat_lib/applicationinsights-core-2.0.2.jar https://github.com/Microsoft/ApplicationInsights-Java/releases/download/2.0.2/applicationinsights-core-2.0.2.jar --no-verbose \
+        && wget -O /usr/local/app_insights/tomcat_lib/applicationinsights-web-2.0.2.jar https://github.com/Microsoft/ApplicationInsights-Java/releases/download/2.0.2/applicationinsights-web-2.0.2.jar --no-verbose \
+        && wget -O /usr/local/app_insights/aiagent/applicationinsights-agent-2.0.2.jar https://github.com/Microsoft/ApplicationInsights-Java/releases/download/2.0.2/applicationinsights-agent-2.0.2.jar --no-verbose \
         && chmod 755 /bin/init_container.sh 
 
 EXPOSE 80 2222

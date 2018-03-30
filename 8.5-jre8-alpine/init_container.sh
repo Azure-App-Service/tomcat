@@ -71,6 +71,20 @@ then
     export WEBSITE_INSTANCE_ID=dev
 fi
 
+# BEGIN: Configure App Insights
+
+# Inject App Insights artefcats into Tomcat, if APPINSIGHTS_INSTRUMENTATIONKEY is defined
+if [[ -v APPINSIGHTS_INSTRUMENTATIONKEY ]]
+then
+    echo "Initializing App Insights.."
+    mv /usr/local/app_insights/tomcat_lib/* /usr/local/tomcat/lib/
+    mv /tmp/tomcat/web.xml /usr/local/tomcat/conf/web.xml
+else
+    echo "Skipping App Insights initialization"
+fi
+
+# END: Configure App Insights
+
 export JAVA_OPTS="$JAVA_OPTS -Dcatalina.instance.name=$WEBSITE_INSTANCE_ID"
 
 echo Listing environment variables being passed to Tomcat...
