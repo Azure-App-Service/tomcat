@@ -12,10 +12,6 @@ Documentation: http://aka.ms/webapp-linux
 EOL
 cat /etc/motd
 
-echo Listing environment variables passed to init_container.sh...
-printenv
-echo Finished listing environment variables passed to init_container.sh.
-
 echo "Setup openrc ..." && openrc && touch /run/openrc/softlevel
 
 echo Starting ssh service...
@@ -87,9 +83,62 @@ fi
 
 export JAVA_OPTS="$JAVA_OPTS -Dcatalina.instance.name=$WEBSITE_INSTANCE_ID"
 
-echo Listing environment variables being passed to Tomcat...
-printenv
-echo Finished listing environment variables being passed to Tomcat.
+# After all env vars are defined, add the ones of interest to ~/.profile
+# Adding to ~/.profile makes the env vars available to new login sessions (ssh) of the same user.
+
+# list of variables that will be added to ~/.profile
+export_vars=()
+
+# Step 1. Add app settings to ~/.profile
+# To check if an environment variable xyz is an app setting, we check if APPSETTING_xyz is defined as an env var
+while read -r var
+do
+    if [ -n "`printenv APPSETTING_$var`" ]
+    then
+        export_vars+=($var)
+    fi
+done <<< `printenv | cut -d "=" -f 1 | grep -v ^APPSETTING_`
+
+# Step 2. Add well known environment variables to ~/.profile
+well_known_env_vars=( 
+    CATALINA_HOME
+    CATALINA_BASE
+    HTTP_LOGGING_ENABLED
+    WEBSITE_SITE_NAME
+    WEBSITE_ROLE_INSTANCE_ID
+    TOMCAT_VERSION
+    JAVA_OPTS
+    JAVA_HOME
+    JAVA_VERSION
+    TOMCAT_MAJOR
+    WEBSITE_INSTANCE_ID
+    _JAVA_OPTIONS
+    TOMCAT_SHA1
+    JAVA_ALPINE_VERSION
+    JAVA_DEBIAN_VERSION
+    )
+
+for var in "${well_known_env_vars[@]}"
+do
+    if [ -n "`printenv $var`" ]
+    then
+        export_vars+=($var)
+    fi
+done
+
+# Step 3. Add environment variables with well known prefixes to ~/.profile
+while read -r var
+do
+    export_vars+=($var)
+done <<< `printenv | cut -d "=" -f 1 | grep -E "^(WEBSITE|APPSETTING|SQLCONNSTR|MYSQLCONNSTR|SQLAZURECONNSTR|CUSTOMCONNSTR)_"`
+
+# Write the variables to be exported to ~/.profile
+for export_var in "${export_vars[@]}"
+do
+    echo Exporting env var $export_var
+    # We use single quotes to preserve escape characters
+	echo export $export_var=\'`printenv $export_var`\' >> ~/.profile
+done
 
 # Start Tomcat
 echo Starting Tomcat with CATALINA_BASE set to \"$CATALINA_BASE\"
