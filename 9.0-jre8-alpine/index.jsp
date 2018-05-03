@@ -10,7 +10,7 @@
                 case "en-us":
                     t = "Azure App Service - Welcome";
                     h = "Your App Service app is up and running";
-                    p = "Go to your app's quick start guide in the Azure Stack portal to get started or read our deployment documentation.";
+                    p = "Go to your app's quick start guide in the Azure portal to get started or read our deployment documentation.";
                     break;
                 case "de-de":
                     t = "Azure App Service – Willkommen";
@@ -413,7 +413,7 @@
             </svg>
             <SPAN class="azureBrand">Microsoft Azure</SPAN>
             <DIV id="bodyHeadline" class="bodyHeadline">Your App Service app is up and running</DIV>
-            <DIV id="bodyContent" class="bodyContent">Go to your app's quick start guide in the Azure Stack portal to get started or read our deployment documentation.</DIV>
+            <DIV id="bodyContent" class="bodyContent">Go to your app's quick start guide in the Azure portal to get started or read our deployment documentation.</DIV>
 			
 			<table width="750" frame="below">
               <tr bgcolor="rgb(13,188,242)">  
