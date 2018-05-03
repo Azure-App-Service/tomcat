@@ -66,9 +66,12 @@
          APR (HTTP/AJP) Connector: /docs/apr.html
          Define a non-SSL/TLS HTTP/1.1 Connector on port 8080
     -->
+
+    <!-- Set maxHttpHeaderSize to 16KB to allow for Easy Auth related headers to flow -->
     <Connector port="${port.http}" protocol="HTTP/1.1"
                connectionTimeout="20000"
-               redirectPort="8443" />
+               redirectPort="8443"
+               maxHttpHeaderSize="16384" />
     <!-- A "Connector" using the shared thread pool-->
     <!--
     <Connector executor="tomcatThreadPool"
