@@ -71,6 +71,7 @@ fi
 if [[ -v APPINSIGHTS_INSTRUMENTATIONKEY ]]
 then
     echo "Initializing App Insights.."
+    export CATALINA_OPTS=-javaagent:/usr/local/app_insights/aiagent/applicationinsights-agent-$AI_VERSION.jar $CATALINA_OPTS
     mv /usr/local/app_insights/tomcat_lib/* /usr/local/tomcat/lib/
     mv /tmp/tomcat/web.xml /usr/local/tomcat/conf/web.xml
 else
@@ -101,6 +102,7 @@ done <<< `printenv | cut -d "=" -f 1 | grep -v ^APPSETTING_`
 well_known_env_vars=( 
     CATALINA_HOME
     CATALINA_BASE
+    CATALINA_OPTS
     HTTP_LOGGING_ENABLED
     WEBSITE_SITE_NAME
     WEBSITE_ROLE_INSTANCE_ID
@@ -114,6 +116,7 @@ well_known_env_vars=(
     TOMCAT_SHA1
     JAVA_ALPINE_VERSION
     JAVA_DEBIAN_VERSION
+    AI_VERSION
     )
 
 for var in "${well_known_env_vars[@]}"

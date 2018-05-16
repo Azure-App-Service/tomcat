@@ -15,8 +15,6 @@ COPY sshd_config /etc/ssh/
 COPY tmp/shared/app_insights/AI-Agent.xml /usr/local/app_insights/aiagent/
 COPY tmp/shared/app_insights/ApplicationInsights.xml /usr/local/app_insights/tomcat_lib/
 
-ENV CATALINA_OPTS -javaagent:/usr/local/app_insights/aiagent/applicationinsights-agent-2.0.2.jar $CATALINA_OPTS
-
 ENV JAVA_OPTS -Djdk.tls.ephemeralDHKeySize=2048 $JAVA_OPTS
 ENV JAVA_OPTS -Djava.protocol.handler.pkgs=org.apache.catalina.webresources $JAVA_OPTS
 ENV JAVA_OPTS -Djava.util.logging.config.file=/usr/local/tomcat/conf/logging.properties $JAVA_OPTS
@@ -26,15 +24,16 @@ ENV JAVA_OPTS -Dsite.home=/home $JAVA_OPTS
 ENV JAVA_OPTS -Dsite.tempdir=/tmp $JAVA_OPTS
 ENV JAVA_OPTS -Dport.http=80 $JAVA_OPTS
 ENV _JAVA_OPTIONS -Djava.net.preferIPv4Stack=true
+ENV AI_VERSION 2.1.0
 
 RUN apt-get update \
         && apt-get install -y --no-install-recommends dialog \
         && apt-get update \
         && apt-get install -y --no-install-recommends openssh-server \
         && echo "root:Docker!" | chpasswd \
-        && wget -O /usr/local/app_insights/tomcat_lib/applicationinsights-core-2.0.2.jar https://github.com/Microsoft/ApplicationInsights-Java/releases/download/2.0.2/applicationinsights-core-2.0.2.jar --no-verbose \
-        && wget -O /usr/local/app_insights/tomcat_lib/applicationinsights-web-2.0.2.jar https://github.com/Microsoft/ApplicationInsights-Java/releases/download/2.0.2/applicationinsights-web-2.0.2.jar --no-verbose \
-        && wget -O /usr/local/app_insights/aiagent/applicationinsights-agent-2.0.2.jar https://github.com/Microsoft/ApplicationInsights-Java/releases/download/2.0.2/applicationinsights-agent-2.0.2.jar --no-verbose \
+        && wget -O /usr/local/app_insights/tomcat_lib/applicationinsights-core-$AI_VERSION.jar https://github.com/Microsoft/ApplicationInsights-Java/releases/download/v$AI_VERSION/applicationinsights-core-$AI_VERSION.jar --no-verbose \
+        && wget -O /usr/local/app_insights/tomcat_lib/applicationinsights-web-$AI_VERSION.jar https://github.com/Microsoft/ApplicationInsights-Java/releases/download/v$AI_VERSION/applicationinsights-web-$AI_VERSION.jar --no-verbose \
+        && wget -O /usr/local/app_insights/aiagent/applicationinsights-agent-$AI_VERSION.jar https://github.com/Microsoft/ApplicationInsights-Java/releases/download/v$AI_VERSION/applicationinsights-agent-$AI_VERSION.jar --no-verbose \
         && chmod 755 /bin/init_container.sh 
 
 EXPOSE 80 2222
