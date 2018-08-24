@@ -71,7 +71,11 @@
     <Connector port="${port.http}" protocol="HTTP/1.1"
                connectionTimeout="20000"
                redirectPort="8443"
-               maxHttpHeaderSize="16384" />
+               maxHttpHeaderSize="16384"
+             compression="on"
+             compressionMinSize="1024"
+             noCompressionUserAgents="gozilla, traviata"
+             compressableMimeType="text/html,text/xml" />
     <!-- A "Connector" using the shared thread pool-->
     <!--
     <Connector executor="tomcatThreadPool"
