@@ -3,8 +3,8 @@ FROM $BASE_IMAGE
 MAINTAINER Azure App Services Container Images <appsvc-images@microsoft.com>
 
 ENV AI_VERSION 2.1.0
-ENV TOMCAT_VERSION 8.5.33
-ENV TOMCAT_MAJOR 8
+ENV TOMCAT_VERSION 9.0.11
+ENV TOMCAT_MAJOR 9
 
 ENV JAVA_OPTS -Djdk.tls.ephemeralDHKeySize=2048 $JAVA_OPTS
 ENV JAVA_OPTS -Djava.protocol.handler.pkgs=org.apache.catalina.webresources $JAVA_OPTS

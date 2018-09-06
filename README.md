@@ -5,8 +5,12 @@ This repository contains Docker images for Apache Tomcat for running on Azure Ap
 ## Build
 ```
 ./setup.sh
-cd 8.5-jre8
+cd <directory> # example: cd 8.5-jre8
 docker build -t tomcat .
+```
+To change the base image that is used, you can run:
+```
+docker build --build-arg BASE_IMAGE=<base image name> -t tomcat .
 ```
 
 ## Run
