@@ -10,7 +10,7 @@ docker build -t tomcat .
 ```
 To change the base image that is used, you can run:
 ```
-docker build --build-arg BASE_IMAGE=<base image name> -t tomcat .
+docker build --no-cache --build-arg BASE_IMAGE=<base image name> -t tomcat .
 ```
 
 ## Run
