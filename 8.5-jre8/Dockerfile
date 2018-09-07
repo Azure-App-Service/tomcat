@@ -1,6 +1,6 @@
 ARG BASE_IMAGE=appsvc/java:8-jre8_0000000000
 FROM $BASE_IMAGE
-MAINTAINER Azure App Services Container Images <appsvc-images@microsoft.com>
+LABEL mainteinter="Azure App Services Container Images <appsvc-images@microsoft.com>"
 
 ENV AI_VERSION 2.1.2
 ENV TOMCAT_VERSION 8.5.33
@@ -18,12 +18,16 @@ ENV _JAVA_OPTIONS -Djava.net.preferIPv4Stack=true
 
 ENV PATH /usr/local/tomcat/bin:$PATH
 
+# Remove the sample webapps provided by Tomcat
 RUN rm -rf /usr/local/tomcat/webapps/
 
+# Remove the artifacts created by the base Java image, as we know we don't need them
+RUN rm -rf /tmp/webapps/
+
 COPY init_container.sh /bin/init_container.sh
-COPY web.xml /tmp/tomcat/web.xml
-COPY index.jsp /tmp/webapps/ROOT/index.jsp
-COPY background.png /tmp/webapps/ROOT/background.png
+COPY web.xml /tmp/tomcat/conf/web.xml
+COPY index.jsp /tmp/tomcat/webapps/ROOT/index.jsp
+COPY background.png /tmp/tomcat/webapps/ROOT/background.png
 COPY sshd_config /etc/ssh/
 COPY tmp/shared/app_insights/AI-Agent.xml /usr/local/app_insights/aiagent/
 COPY tmp/shared/app_insights/ApplicationInsights.xml /usr/local/app_insights/tomcat_lib/

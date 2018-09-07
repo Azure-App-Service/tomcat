@@ -40,7 +40,7 @@ fi
 if [ ! -d /home/site/wwwroot/webapps ]
 then
     mkdir -p /home/site/wwwroot
-    cp -r /tmp/webapps /home/site/wwwroot
+    cp -r /tmp/tomcat/webapps /home/site/wwwroot
 fi
 
 # Temporary workaround until wardeploy supports clean deployment.
@@ -73,7 +73,7 @@ then
     echo "Initializing App Insights.."
     export CATALINA_OPTS=-javaagent:/usr/local/app_insights/aiagent/applicationinsights-agent-$AI_VERSION.jar $CATALINA_OPTS
     mv /usr/local/app_insights/tomcat_lib/* /usr/local/tomcat/lib/
-    mv /tmp/tomcat/web.xml /usr/local/tomcat/conf/web.xml
+    mv /tmp/tomcat/conf/web.xml /usr/local/tomcat/conf/web.xml
 else
     echo "Skipping App Insights initialization"
 fi
