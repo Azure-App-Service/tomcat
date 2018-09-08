@@ -13,6 +13,8 @@ To change the base image that is used, you can run:
 docker build --no-cache --build-arg BASE_IMAGE=<base image name> -t tomcat .
 ```
 
+If you are building on Windows, make sure you configure git as follows to avoid CRLF issues: `git config --global core.autocrlf false`
+
 ## Run
 
 ```
@@ -28,5 +30,3 @@ ssh root@$container_ip -p 2222
 
 The username is `root` and password is `Docker!`. For detailed documentation, refer https://docs.microsoft.com/en-us/azure/app-service/containers/tutorial-custom-docker-image.
 
-## Known issues
-Currently, due to line ending issues, building and running on a Windows machine causes issues during the container startup. This will be fixed soon.
