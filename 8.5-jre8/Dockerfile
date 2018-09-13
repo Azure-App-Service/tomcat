@@ -3,7 +3,7 @@ FROM $BASE_IMAGE
 LABEL mainteinter="Azure App Services Container Images <appsvc-images@microsoft.com>"
 
 ENV AI_VERSION 2.1.2
-ENV TOMCAT_VERSION 8.5.33
+ENV TOMCAT_VERSION 8.5.34
 ENV TOMCAT_MAJOR 8
 
 ENV JAVA_OPTS -Djdk.tls.ephemeralDHKeySize=2048 $JAVA_OPTS
@@ -36,7 +36,7 @@ RUN apt-get update \
         && apt-get install -y --no-install-recommends dialog wget \
         && rm -rf /var/lib/apt/lists/* \
         && echo "root:Docker!" | chpasswd \
-        && wget -O /tmp/apache-tomcat-$TOMCAT_VERSION.tar.gz http://www-eu.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz --no-verbose \
+        && wget -O /tmp/apache-tomcat-$TOMCAT_VERSION.tar.gz https://archive.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz --no-verbose \
         && tar xvzf /tmp/apache-tomcat-$TOMCAT_VERSION.tar.gz -C /tmp \
         && mv /tmp/apache-tomcat-$TOMCAT_VERSION /usr/local/tomcat \
         && rm -rf /usr/local/tomcat/webapps \
