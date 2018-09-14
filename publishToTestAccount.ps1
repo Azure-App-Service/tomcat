@@ -8,20 +8,20 @@ $ErrorActionPreference = "Stop"
 
 function GetImage
 {
-    param([string]$version, [string]$tag)
+    param([string]$version, [string]$timestamp)
 
-    $image = $RepoName + '/tomcat:' + $version + '_' + $tag
+    $image = $RepoName + '/tomcat:' + $version + '_' + $timestamp
 
     return $image
 }
 
 function Build
 {
-    param([string]$version, [string]$tag)
+    param([string]$version, [string]$timestamp)
 
     .\setup.ps1 -version $version
 
-    $image = GetImage -version $version -tag $tag
+    $image = GetImage -version $version -timestamp $timestamp
 
     Write-Host -ForegroundColor Green Building $image
     Write-Host -ForegroundColor Green docker build --no-cache -t $image $version
@@ -30,18 +30,17 @@ function Build
 
 function Publish
 {
-    param([string]$version, [string]$tag)
+    param([string]$version, [string]$timestamp)
 
-    $tag1=$tag
-    $tag2='0000000000'
+    $timestamp1=$timestamp
+    $timestamp2='0000000000'
 
-    $image1 = GetImage -version $version -tag $tag1
-    $image2 = GetImage -version $version -tag $tag2
+    $image1 = GetImage -version $version -timestamp $timestamp1
+    $image2 = GetImage -version $version -timestamp $timestamp2
 
     Write-Host -ForegroundColor Green **Pushing** $image1
     docker push $image1
 
-    Write-Host -ForegroundColor Green Tagging $image2
     docker tag $image1 $image2
 
     Write-Host -ForegroundColor Green **Pushing** $image2
@@ -51,11 +50,11 @@ function Publish
 $localTime=get-date
 $utcTime=$localTime.ToUniversalTime()
 
-$tag = $utcTime.ToString('yyMMddHHmm')
+$timestamp = $utcTime.ToString('yyMMddHHmm')
 
-Build -version '8.5-jre8' -tag $tag
-Build -version '9.0-jre8' -tag $tag
+Build -version '8.5-jre8' -timestamp $timestamp
+Build -version '9.0-jre8' -timestamp $timestamp
 
-Publish -version '8.5-jre8' -tag $tag
-Publish -version '9.0-jre8' -tag $tag
+Publish -version '8.5-jre8' -timestamp $timestamp
+Publish -version '9.0-jre8' -timestamp $timestamp
 
