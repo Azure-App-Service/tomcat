@@ -12,8 +12,10 @@ Documentation: http://aka.ms/webapp-linux
 EOL
 cat /etc/motd
 
+echo "Setup openrc ..." && openrc && touch /run/openrc/softlevel
+
 echo Starting ssh service...
-service ssh start
+rc-service sshd start
 
 # If a custom initialization script is defined, run it and exit.
 if [ -n "$INIT_SCRIPT" ]
