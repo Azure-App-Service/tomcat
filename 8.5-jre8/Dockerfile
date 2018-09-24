@@ -1,6 +1,7 @@
-ARG BASE_IMAGE=appsvc/java:8-jre8_0000000000
+ARG BASE_IMAGE=mcr.microsoft.com/java/jre:8u181-zulu-alpine
 FROM $BASE_IMAGE
-LABEL mainteinter="Azure App Services Container Images <appsvc-images@microsoft.com>"
+
+LABEL maintainer="Azure App Services Container Images <appsvc-images@microsoft.com>"
 
 ENV AI_VERSION 2.1.2
 ENV TOMCAT_VERSION 8.5.34
@@ -32,9 +33,8 @@ COPY sshd_config /etc/ssh/
 COPY tmp/shared/app_insights/AI-Agent.xml /usr/local/app_insights/aiagent/
 COPY tmp/shared/app_insights/ApplicationInsights.xml /usr/local/app_insights/tomcat_lib/
 
-RUN apt-get update \
-        && apt-get install -y --no-install-recommends dialog wget \
-        && rm -rf /var/lib/apt/lists/* \
+RUN apk add --update openssh-server bash openrc \
+        && rm -rf /var/cache/apk/* \
         && echo "root:Docker!" | chpasswd \
         && wget -O /tmp/apache-tomcat-$TOMCAT_VERSION.tar.gz https://archive.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz --no-verbose \
         && tar xvzf /tmp/apache-tomcat-$TOMCAT_VERSION.tar.gz -C /tmp \
