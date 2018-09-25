@@ -11,7 +11,7 @@ docker build -t tomcat .
 ```
 To change the base image that is used, you can run:
 ```
-docker build --no-cache --build-arg BASE_IMAGE=<base image name> -t tomcat .
+docker build --no-cache [--build-arg BASE_IMAGE=<base image name>] -t tomcat .
 ```
 
 If you are building on Windows, make sure you configure git as follows to avoid CRLF issues: `git config --global core.autocrlf false`
