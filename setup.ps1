@@ -1,9 +1,3 @@
-[CmdletBinding()]
-Param(
-	[Parameter(Mandatory=$True, HelpMessage="Example: 8.5-jre8")]
-	[string]$version
-)
-
 function setup
 {
 	param([string]$version)
@@ -18,4 +12,5 @@ function setup
 	copy-item -recurse shared $dirpath
 }
 
-setup -version $version
+setup -version '8.5-jre8'
+setup -version '9.0-jre8'
