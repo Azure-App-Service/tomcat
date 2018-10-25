@@ -45,21 +45,6 @@ then
     cp -r /tmp/tomcat/webapps /home/site/wwwroot
 fi
 
-# Temporary workaround until wardeploy supports clean deployment.
-# This creates a hardcoded deployment manifest for the files in the /home/site/wwwroot/webapps/ROOT directory.
-if [ ! -f /home/site/deployments/active ]
-then
-    FIRST_DEPLOYMENT_ID=c9b8ca0c06d240138b32705530b4bf37
-    mkdir -p /home/site/deployments/$FIRST_DEPLOYMENT_ID
-    echo index.jsp > /home/site/deployments/$FIRST_DEPLOYMENT_ID/manifest
-    echo background.png >> /home/site/deployments/$FIRST_DEPLOYMENT_ID/manifest
-    # NOTE: Using echo -n because it is important that there be no new line at the end of the deployment ID
-    echo -n $FIRST_DEPLOYMENT_ID > /home/site/deployments/active
-    echo "first manifest created."
-else
-    echo "skipped creating the first manifest."
-fi
-
 # WEBSITE_INSTANCE_ID will be defined uniquely for each worker instance while running in Azure.
 # During development it may not be defined, in that case  we set WEBSITE_INSTNACE_ID=dev.
 if [ -z "$WEBSITE_INSTANCE_ID" ]
