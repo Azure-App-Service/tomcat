@@ -290,6 +290,33 @@
             </testResource>
         </testResources>
         <plugins>
+
+            <!--*************************************************-->
+            <!-- Deploy to Tomcat in App Service Linux           -->
+            <!--*************************************************-->
+            <plugin>
+                <groupId>com.microsoft.azure</groupId>
+                <artifactId>azure-webapp-maven-plugin</artifactId>
+                <version>1.4.1</version>
+                <configuration>
+            
+                    <!-- Web App information -->
+                    <resourceGroup>${RESOURCEGROUP_NAME}</resourceGroup>
+                    <appServicePlanName>${WEBAPP_PLAN_NAME}</appServicePlanName>
+                    <appName>${WEBAPP_NAME}</appName>
+                    <region>${REGION}</region>
+            
+                    <!-- Java Runtime Stack for Web App on Linux-->
+                    <containerSettings>
+                        <imageName>${CONTAINER_NAME}</imageName>
+                    </containerSettings>
+<!--
+                    <linuxRuntime>tomcat 8.5-jre8</linuxRuntime>
+-->
+            
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
