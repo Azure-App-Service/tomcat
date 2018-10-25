@@ -5,7 +5,7 @@ This repository contains Docker images for Apache Tomcat for running on Azure Ap
 ## Build
 Run the following commands in powershell:
 ```
-.\setup.ps1
+.\scripts\setup.ps1
 cd <directory> # example: cd 8.5-jre8
 docker build -t tomcat .
 ```
