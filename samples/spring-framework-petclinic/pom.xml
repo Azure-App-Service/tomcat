@@ -308,7 +308,7 @@
             
                     <!-- Java Runtime Stack for Web App on Linux-->
                     <containerSettings>
-                        <imageName>${CONTAINER_NAME}</imageName>
+                        <imageName>${IMAGE_NAME}</imageName>
                     </containerSettings>
 <!--
                     <linuxRuntime>tomcat 8.5-jre8</linuxRuntime>
