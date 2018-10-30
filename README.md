@@ -4,9 +4,9 @@ This repository contains Docker images for Apache Tomcat for running on Azure Ap
 
 ## Build
 Run the following commands in powershell:
-```
+```powershell
 .\scripts\setup.ps1
-cd <directory> # example: cd 8.5-jre8
+cd <directory> # Example: cd 8.5-jre8
 docker build -t tomcat .
 ```
 To change the base image that is used, you can run:
@@ -16,10 +16,19 @@ docker build --no-cache [--build-arg BASE_IMAGE=<base image name>] -t tomcat .
 
 If you are building on Windows, make sure you configure git as follows to avoid CRLF issues: `git config --global core.autocrlf false`
 
-## Run
+## Run the image locally
 
 ```
 docker run tomcat
+```
+
+## Deploy and run the sample app to Azure
+Run the following commands in powershell:
+```powershell
+cd .\samples\spring-framework-petclinic
+..\..\scripts\deployAndRunApp.ps1 [-webAppName <appname>] -imageName <imagename> 
+
+# Example: ..\..\scripts\deployAndRunApp.ps1 -imageName myrepo/myimage:mytag
 ```
 
 ## SSH to the Docker container
