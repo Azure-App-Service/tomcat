@@ -1,10 +1,10 @@
-ARG BASE_IMAGE=mcr.microsoft.com/java/jre:8u181-zulu-alpine
+ARG BASE_IMAGE=mcr.microsoft.com/java/jre-headless:8u192-zulu-alpine
 FROM $BASE_IMAGE
 
 LABEL maintainer="Azure App Services Container Images <appsvc-images@microsoft.com>"
 
 ENV AI_VERSION 2.1.2
-ENV TOMCAT_VERSION 8.5.34
+ENV TOMCAT_VERSION 8.5.35
 ENV TOMCAT_MAJOR 8
 
 ENV JAVA_OPTS -Djdk.tls.ephemeralDHKeySize=2048 $JAVA_OPTS
@@ -15,6 +15,7 @@ ENV JAVA_OPTS -Dsite.logdir=/home/LogFiles $JAVA_OPTS
 ENV JAVA_OPTS -Dsite.home=/home $JAVA_OPTS
 ENV JAVA_OPTS -Dsite.tempdir=/tmp $JAVA_OPTS
 ENV JAVA_OPTS -Dport.http=80 $JAVA_OPTS
+ENV JAVA_OPTS -noverify $JAVA_OPTS
 ENV _JAVA_OPTIONS -Djava.net.preferIPv4Stack=true
 
 ENV PATH /usr/local/tomcat/bin:$PATH
