@@ -4,7 +4,10 @@ Param(
 	[string]$webAppName,
 
 	[Parameter(Mandatory=$True, HelpMessage="Example: myrepo/tomcat:8.5-jre8")]
-	[string]$imageName
+	[string]$imageName,
+
+	[Parameter(Mandatory=$False, HelpMessage="Example: A Valid GUID key OR Empty")]
+	[string]$appInsightsInstrumentationKey
 )
 
 function loadPage()
@@ -18,7 +21,7 @@ function loadPage()
     $success = $false
     $statusCode = 0
     $durationInSeconds = 0
-    $maxDurationInSeconds = 210 # maximum time we want to wait for the web app to load
+    $maxDurationInSeconds = 210 # arbitrarily chosen maximum time we want to wait for the web app to load
 
     while ($success -eq $false -and $durationInSeconds -le $maxDurationInSeconds)
     {
@@ -84,7 +87,7 @@ else
 }
 
 $preDeploymentTimestamp = Get-Date
-.\deployApp.ps1 -webAppName $webAppName -imageName $imageName
+.\deployApp.ps1 -webAppName $webAppName -imageName $imageName -appInsightsInstrumentationKey $appInsightsInstrumentationKey
 $postDeploymentTimestamp = Get-Date
 
 $url = "https://$webAppName.azurewebsites.net"
@@ -113,7 +116,7 @@ $startupDuration2 = [math]::Round( ($startupTimestamp2 - $startupTimestamp1).Tot
 $startupDuration3 = [math]::Round( ($startupTimestamp3 - $startupTimestamp2).TotalSeconds )
 
 Write-Host -ForegroundColor Green "======================== RESULTS ========================"
-Write-Host -ForegroundColor Green "webAppName: $webAppName, imageName: $imageName"
+Write-Host -ForegroundColor Green "webAppName: $webAppName | webAppUrl: http://$webAppName.azurewebsites.net | imageName: $imageName | appInsightsInstrumentationKey: $appInsightsInstrumentationKey"
 Write-Host -ForegroundColor Green "Build and deployment duration: $deploymentDuration seconds"
 Write-Host -ForegroundColor Green "First page load duration: $startupDuration1 seconds"
 Write-Host -ForegroundColor Green "Second page load duration: $startupDuration2 seconds"

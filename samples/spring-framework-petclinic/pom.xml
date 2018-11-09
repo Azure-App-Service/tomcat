@@ -314,6 +314,12 @@
                     <linuxRuntime>tomcat 8.5-jre8</linuxRuntime>
 -->
             
+                    <appSettings>
+                        <property>
+                            <name>APPINSIGHTS_INSTRUMENTATIONKEY</name>
+                            <value>${APPINSIGHTS_INSTRUMENTATIONKEY}</value>
+                        </property>
+                    </appSettings>
                 </configuration>
             </plugin>
 
