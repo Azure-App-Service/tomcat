@@ -67,7 +67,27 @@ fi
 
 # END: Configure App Insights
 
+# BEGIN: Define JAVA OPTIONS
+
+# Configure JAVA OPTIONS. Make sure, we append the default values instead of prepending them.
+# That way, the default values take precedence and we avoid the risk of an appsetting overriding the critical (default) properties.
+
+export JAVA_OPTS="$JAVA_OPTS -Djdk.tls.ephemeralDHKeySize=2048"
+export JAVA_OPTS="$JAVA_OPTS -Djava.protocol.handler.pkgs=org.apache.catalina.webresources"
+export JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.config.file=/usr/local/tomcat/conf/logging.properties"
+export JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
+export JAVA_OPTS="$JAVA_OPTS -Dsite.logdir=/home/LogFiles"
+export JAVA_OPTS="$JAVA_OPTS -Dsite.home=/home"
+export JAVA_OPTS="$JAVA_OPTS -Dsite.tempdir=/tmp"
+export JAVA_OPTS="$JAVA_OPTS -Dport.http=80"
+export JAVA_OPTS="$JAVA_OPTS -noverify"
 export JAVA_OPTS="$JAVA_OPTS -Dcatalina.instance.name=$WEBSITE_INSTANCE_ID"
+
+export _JAVA_OPTIONS="$_JAVA_OPTIONS -Djava.net.preferIPv4Stack=true"
+
+# END: Define JAVA OPTIONS
+
+# BEGIN: Configure ~/.profile
 
 # After all env vars are defined, add the ones of interest to ~/.profile
 # Adding to ~/.profile makes the env vars available to new login sessions (ssh) of the same user.
@@ -127,6 +147,8 @@ do
     # We use single quotes to preserve escape characters
 	echo export $export_var=\'`printenv $export_var`\' >> ~/.profile
 done
+
+# END: Configure ~/.profile
 
 # Start Tomcat
 echo Starting Tomcat with CATALINA_BASE set to \"$CATALINA_BASE\"
