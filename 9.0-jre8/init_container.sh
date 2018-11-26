@@ -148,6 +148,9 @@ do
 	echo export $export_var=\'`printenv $export_var`\' >> ~/.profile
 done
 
+# We want all ssh sesions to start in the /home directory
+echo "cd /home" >> ~/.profile
+
 # END: Configure ~/.profile
 
 # Start Tomcat
