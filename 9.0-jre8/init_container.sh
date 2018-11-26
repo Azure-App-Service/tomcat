@@ -17,15 +17,6 @@ echo "Setup openrc ..." && openrc && touch /run/openrc/softlevel
 echo Starting ssh service...
 rc-service sshd start
 
-# If a custom initialization script is defined, run it and exit.
-if [ -n "$INIT_SCRIPT" ]
-then
-    echo Running custom initialization script
-    source $INIT_SCRIPT
-    echo Finished running custom initialization script. Exiting.
-    exit
-fi
-
 # Default to CATALINA_BASE=/home/tomcat
 if [[ -z $CATALINA_BASE && -a /home/tomcat/conf/server.xml ]]
 then
@@ -152,6 +143,30 @@ done
 echo "cd /home" >> ~/.profile
 
 # END: Configure ~/.profile
+
+# BEGIN: Run startup file
+
+# Get the startup file path
+if [ -n "$1" ]
+then
+    # Path defined in the portal will be available as an argument to this script
+    STARTUP_FILE=$1
+else
+    # Default startup file path
+    STARTUP_FILE=/home/startup.sh
+fi
+
+# Run the startup file, if it exists
+if [ -f $STARTUP_FILE ]
+then
+    echo Running startup file $STARTUP_FILE
+    source $STARTUP_FILE
+    echo Finished running startup file $STARTUP_FILE
+else
+    echo Looked for startup file $STARTUP_FILE, but did not find it, so skipping running it.
+fi
+
+# END: Run startup file
 
 # Start Tomcat
 echo Starting Tomcat with CATALINA_BASE set to \"$CATALINA_BASE\"
