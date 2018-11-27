@@ -7,7 +7,7 @@ Run the following commands in powershell:
 ```powershell
 .\scripts\setup.ps1
 cd <directory> # Example: cd 8.5-jre8
-docker build -t tomcat .
+docker build --no-cache -t tomcat .
 ```
 To change the base image that is used, you can run:
 ```
