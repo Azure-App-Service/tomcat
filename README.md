@@ -26,7 +26,7 @@ docker run tomcat
 Run the following commands in powershell:
 ```powershell
 cd .\samples\spring-framework-petclinic
-..\..\scripts\deployAndRunApp.ps1 [-webAppName <appname>] -imageName <imagename> 
+..\..\scripts\deployAndRunApp.ps1 -imageName <imagename> [-webAppName <appname>] [-appInsightsInstrumentationKey <key>]
 
 # Example: ..\..\scripts\deployAndRunApp.ps1 -imageName myrepo/myimage:mytag
 ```
