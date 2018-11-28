@@ -19,7 +19,7 @@ function Build
 {
     param([string]$version, [string]$timestamp)
 
-    .\setup.ps1 -version $version
+    .\scripts\setup.ps1 -version $version
 
     $image = GetImage -version $version -timestamp $timestamp
 
