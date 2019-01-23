@@ -16,7 +16,7 @@ RUN rm -rf /usr/local/tomcat/webapps/
 RUN rm -rf /tmp/webapps/
 
 COPY init_container.sh /bin/init_container.sh
-COPY web-ai.xml /tmp/tomcat/conf/web.xml
+COPY web-easyauth-ai.xml /tmp/tomcat/conf/web-easyauth-ai.xml
 COPY index.jsp /tmp/tomcat/webapps/ROOT/index.jsp
 COPY background.png /tmp/tomcat/webapps/ROOT/background.png
 COPY sshd_config /etc/ssh/
@@ -40,7 +40,7 @@ COPY server.xml /usr/local/tomcat/conf/server.xml
 COPY catalina.properties /usr/local/tomcat/conf/catalina.properties
 COPY context.xml /usr/local/tomcat/conf/context.xml
 COPY logging.properties /usr/local/tomcat/conf/logging.properties
-COPY web.xml /usr/local/tomcat/conf/web.xml
+COPY web-easyauth.xml /usr/local/tomcat/conf/web.xml
 COPY tmp/shared/easyauth/azure.appservice.easyauth.jar /usr/local/tomcat/lib/
 COPY tmp/shared/easyauth/javax.json-api-1.0.jar /usr/local/tomcat/lib/
 COPY tmp/shared/easyauth/javax.json-1.0.4.jar /usr/local/tomcat/lib/
