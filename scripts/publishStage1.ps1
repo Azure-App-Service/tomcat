@@ -1,7 +1,7 @@
 [CmdletBinding()]
 Param(
-    [Parameter(Mandatory=$False, HelpMessage="Example: appsvctest")]
-    [string]$repoName='appsvctest'
+    [Parameter(Mandatory=$True, HelpMessage="Example: appsvctest")]
+    [string]$repoName
 )
 
 $ErrorActionPreference = "Stop"
@@ -45,6 +45,16 @@ function Publish
 
     Write-Host -ForegroundColor Green **Pushing** $image2
     docker push $image2
+}
+
+
+### Main
+
+if ($repoName -eq 'appsvc')
+{
+    $msg='ERROR: Parameter $repoName=' + $repoName + ' not allowed. Use some other repoName value as parameter!'
+    Write-Host -ForegroundColor Red $msg
+    return;
 }
 
 $localTime=get-date
