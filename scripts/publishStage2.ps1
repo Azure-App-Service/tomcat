@@ -7,7 +7,10 @@ Param(
     [string]$sourceRepoName,
 
     [Parameter(Mandatory=$True, HelpMessage="Example: appsvc")]
-    [string]$targetRepoName
+    [string]$targetRepoName,
+
+    [Parameter(Mandatory=$True, HelpMessage="If this is true, it will push not only the _0000000000 tag, but also the original (sourceRepoName) tag")]
+    [bool]$pushOriginalTag
 )
 
 $ErrorActionPreference = "Stop"
@@ -23,22 +26,35 @@ function GetImage
 
 function Publish
 {
-    param([string]$version, [string]$timestamp)
+    param([string]$version, [string]$timestamp, [bool]$pushOriginalTag)
 
     $sourceImage = GetImage -repoName $sourceRepoName -version $version -timestamp $timestamp
-    $destinationImage = GetImage -repoName $targetRepoName -version $version -timestamp '0000000000'
+    $destinationImageOriginalTagName = GetImage -repoName $targetRepoName -version $version -timestamp $timestamp
+    $destinationImageZeroTagName = GetImage -repoName $targetRepoName -version $version -timestamp '0000000000'
 
-    # Just an extra precaution
-    docker rmi -f $destinationImage
+    if ($pushOriginalTag)
+    {
+        # Just an extra precaution
+        docker rmi -f $destinationImageOriginalTagName
     
+        Write-Host -ForegroundColor Green Tagging $destinationImageOriginalTagName
+        docker tag $sourceImage $destinationImageOriginalTagName
+   
+        Write-Host -ForegroundColor Green **Pushing** $destinationImageOriginalTagName
+        docker push $destinationImageOriginalTagName
+    }
+
     Write-Host -ForegroundColor Green Pulling $sourceImage
     docker pull $sourceImage
 
-    Write-Host -ForegroundColor Green Tagging $destinationImage
-    docker tag $sourceImage $destinationImage
+    # Just an extra precaution
+    docker rmi -f $destinationImageZeroTagName
+    
+    Write-Host -ForegroundColor Green Tagging $destinationImageZeroTagName
+    docker tag $sourceImage $destinationImageZeroTagName
    
-    Write-Host -ForegroundColor Green **Pushing** $destinationImage
-    docker push $destinationImage
+    Write-Host -ForegroundColor Green **Pushing** $destinationImageZeroTagName
+    docker push $destinationImageZeroTagName
 }
 
 ### Main
@@ -50,5 +66,5 @@ if ($timestamp -eq '0000000000')
     return;
 }
 
-Publish -version '8.5-jre8' -timestamp $timestamp
-Publish -version '9.0-jre8' -timestamp $timestamp
+Publish -version '8.5-jre8' -timestamp $timestamp -pushOriginalTag $pushOriginalTag
+Publish -version '9.0-jre8' -timestamp $timestamp -pushOriginalTag $pushOriginalTag
