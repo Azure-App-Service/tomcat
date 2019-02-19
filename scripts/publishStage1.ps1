@@ -64,7 +64,11 @@ $timestamp = $utcTime.ToString('yyMMddHHmm')
 
 Build -version '8.5-jre8' -timestamp $timestamp
 Build -version '9.0-jre8' -timestamp $timestamp
+Build -version '8.5-java11' -timestamp $timestamp
+Build -version '9.0-java11' -timestamp $timestamp
 
 Publish -version '8.5-jre8' -timestamp $timestamp
 Publish -version '9.0-jre8' -timestamp $timestamp
+Publish -version '8.5-java11' -timestamp $timestamp
+Publish -version '9.0-java11' -timestamp $timestamp
 

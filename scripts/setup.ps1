@@ -14,3 +14,5 @@ function setup
 
 setup -version '8.5-jre8'
 setup -version '9.0-jre8'
+setup -version '8.5-java11'
+setup -version '9.0-java11'
