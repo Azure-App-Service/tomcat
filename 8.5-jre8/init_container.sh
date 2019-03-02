@@ -18,6 +18,9 @@ cat /etc/motd
 
 echo "Setup openrc ..." && openrc && touch /run/openrc/softlevel
 
+echo Updating /etc/ssh/sshd_config to use PORT $SSH_PORT
+sed -i "s/SSH_PORT/$SSH_PORT/g" /etc/ssh/sshd_config
+
 echo Starting ssh service...
 rc-service sshd start
 
@@ -74,7 +77,7 @@ export JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.manager=org.apache.juli.ClassLo
 export JAVA_OPTS="$JAVA_OPTS -Dsite.logdir=/home/LogFiles"
 export JAVA_OPTS="$JAVA_OPTS -Dsite.home=/home"
 export JAVA_OPTS="$JAVA_OPTS -Dsite.tempdir=/tmp"
-export JAVA_OPTS="$JAVA_OPTS -Dport.http=80"
+export JAVA_OPTS="$JAVA_OPTS -Dport.http=$PORT"
 export JAVA_OPTS="$JAVA_OPTS -noverify"
 export JAVA_OPTS="$JAVA_OPTS -Dcatalina.instance.name=$WEBSITE_INSTANCE_ID"
 

@@ -7,6 +7,9 @@ ENV AI_VERSION 2.1.2
 ENV TOMCAT_VERSION 8.5.35
 ENV TOMCAT_MAJOR 8
 
+ENV PORT 80
+ENV SSH_PORT 2222
+
 ENV PATH /usr/local/tomcat/bin:$PATH
 
 # Remove the sample webapps provided by Tomcat
