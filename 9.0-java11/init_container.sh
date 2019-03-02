@@ -148,32 +148,60 @@ echo "cd /home" >> ~/.profile
 
 # END: Configure ~/.profile
 
-# BEGIN: Run startup file
+# BEGIN: Process startup file / startup command, if any
 
-# Get the startup file path
-if [ -n "$1" ]
+DEFAULT_STARTUP_FILE=/home/startup.sh
+STARTUP_FILE=
+STARTUP_COMMAND=
+
+# The web app can be configured to run a custom startup command or a custom startup script
+# This custom command / script will be available to us as a param ($1, $2, ...)
+#
+# IF $1 is a non-empty string AND an existing file, we treat $1 as a startup file (and ignore $2, $3, ...)
+# IF $1 is a non-empty string BUT NOT an existing file, we treat $@ (equivalent of $1, $2, ... combined) as a startup command
+# IF $1 is an empty string AND $DEFAULT_STARTUP_FILE exists, we use it as the startup file
+# ELSE, we skip running the startup script / command
+#
+if [ -n "$1" ] # $1 is a non-empty string
 then
-    # Path defined in the portal will be available as an argument to this script
-    STARTUP_FILE=$1
-else
-    # Default startup file path
-    STARTUP_FILE=/home/startup.sh
+    if [ -f "$1" ] # $1 file exists
+    then
+        STARTUP_FILE=$1
+    else
+        STARTUP_COMMAND=$@
+    fi
+elif [ -f $DEFAULT_STARTUP_FILE ] # Default startup file path exists
+then
+    STARTUP_FILE=$DEFAULT_STARTUP_FILE
 fi
 
-# Run the startup file, if it exists
-if [ -f $STARTUP_FILE ]
+echo STARTUP_FILE=$STARTUP_FILE
+echo STARTUP_COMMAND=$STARTUP_COMMAND
+
+# If $STARTUP_FILE is a non-empty string, we need to run the startup file
+# We first fix the EOL characters in it and then run it
+if [ -n "$STARTUP_FILE" ]
 then
     TMP_STARTUP_FILE=/tmp/startup.sh
     echo Copying $STARTUP_FILE to $TMP_STARTUP_FILE
+    # Convert EOL to Unix-style
     cat $STARTUP_FILE | tr '\r' '\n' > $TMP_STARTUP_FILE
-    echo Running startup file $TMP_STARTUP_FILE
+    echo Running STARTUP_FILE: $TMP_STARTUP_FILE
     source $TMP_STARTUP_FILE
     echo Finished running startup file $TMP_STARTUP_FILE
 else
-    echo Looked for startup file $STARTUP_FILE, but did not find it, so skipping running it.
+    echo No STARTUP_FILE available.
 fi
 
-# END: Run startup file
+if [ -n "$STARTUP_COMMAND" ]
+then
+    echo Running STARTUP_COMMAND: "$STARTUP_COMMAND"
+    $STARTUP_COMMAND
+else
+    echo No STARTUP_COMMAND defined.
+fi
+
+# END: Process startup file / startup command, if any
 
 # Start Tomcat
 echo Starting Tomcat with CATALINA_BASE set to \"$CATALINA_BASE\"
