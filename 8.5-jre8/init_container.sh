@@ -9,6 +9,10 @@ cat >/etc/motd <<EOL
 A P P   S E R V I C E   O N   L I N U X
 
 Documentation: http://aka.ms/webapp-linux
+
+**NOTE**: No files or system changes outside of /home will persist beyond your application's current session. /home is your application's persistent storage and is shared across all the server instances.
+
+
 EOL
 cat /etc/motd
 
