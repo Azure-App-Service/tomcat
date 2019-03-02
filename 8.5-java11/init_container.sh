@@ -163,9 +163,12 @@ fi
 # Run the startup file, if it exists
 if [ -f $STARTUP_FILE ]
 then
-    echo Running startup file $STARTUP_FILE
-    source $STARTUP_FILE
-    echo Finished running startup file $STARTUP_FILE
+    TMP_STARTUP_FILE=/tmp/startup.sh
+    echo Copying $STARTUP_FILE to $TMP_STARTUP_FILE
+    cat $STARTUP_FILE | tr '\r' '\n' > $TMP_STARTUP_FILE
+    echo Running startup file $TMP_STARTUP_FILE
+    source $TMP_STARTUP_FILE
+    echo Finished running startup file $TMP_STARTUP_FILE
 else
     echo Looked for startup file $STARTUP_FILE, but did not find it, so skipping running it.
 fi
