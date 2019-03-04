@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=mcr.microsoft.com/java/jre-headless:8u192-zulu-alpine
+ARG BASE_IMAGE=mcr.microsoft.com/java/jre-headless:8u202-zulu-alpine
 FROM $BASE_IMAGE
 
 LABEL maintainer="Azure App Services Container Images <appsvc-images@microsoft.com>"
