@@ -48,6 +48,11 @@ fi
 if [ -z "$WEBSITE_INSTANCE_ID" ]
 then
     export WEBSITE_INSTANCE_ID=dev
+    # set the Env variables required to test AzMon
+    export HTTP_LOGGING_ENABLED=1
+    export WEBSITE_HOSTNAME=dev.appservice.com
+    export APPSETTING_WEBSITE_AZMON_ENABLED=True
+    export DIAGNOSTIC_LOGS_MOUNT_PATH=/var/log/diagnosticLogs
 fi
 
 # BEGIN: Configure App Insights
@@ -75,6 +80,7 @@ export JAVA_OPTS="$JAVA_OPTS -Djava.protocol.handler.pkgs=org.apache.catalina.we
 export JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.config.file=/usr/local/tomcat/conf/logging.properties"
 export JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
 export JAVA_OPTS="$JAVA_OPTS -Dsite.logdir=/home/LogFiles"
+export JAVA_OPTS="$JAVA_OPTS -Dsite.azMonlogdir=$DIAGNOSTIC_LOGS_MOUNT_PATH"
 export JAVA_OPTS="$JAVA_OPTS -Dsite.home=/home"
 export JAVA_OPTS="$JAVA_OPTS -Dsite.tempdir=/tmp"
 export JAVA_OPTS="$JAVA_OPTS -Dport.http=$PORT"
