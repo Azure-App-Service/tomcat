@@ -1,1 +1,0 @@
-set "CLASSPATH=%CLASSPATH%;%CATALINA_BASE%\lib\azure.appservice.jar"
