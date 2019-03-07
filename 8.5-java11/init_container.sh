@@ -44,15 +44,17 @@ then
 fi
 
 # WEBSITE_INSTANCE_ID will be defined uniquely for each worker instance while running in Azure.
-# During development it may not be defined, in that case  we set WEBSITE_INSTNACE_ID=dev.
+# During DevDelopment, define environment variables required for testing.
 if [ -z "$WEBSITE_INSTANCE_ID" ]
 then
     export WEBSITE_INSTANCE_ID=dev
-    # set the Env variables required to test AzMon
+    
+    # BEGIN: Set the Env variables required to test AzMon
     export HTTP_LOGGING_ENABLED=1
     export WEBSITE_HOSTNAME=dev.appservice.com
     export APPSETTING_WEBSITE_AZMON_ENABLED=True
     export DIAGNOSTIC_LOGS_MOUNT_PATH=/var/log/diagnosticLogs
+    # END: Set the Env variables required to test AzMon
 fi
 
 # BEGIN: Configure App Insights

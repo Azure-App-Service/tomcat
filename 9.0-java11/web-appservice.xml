@@ -434,14 +434,13 @@
     </servlet-mapping>
 -->
 
-
 <!-- BEGIN: Azure App Service EasyAuth -->
 
 <!-- A filter that hydrates the Azure App Service EasyAuth security context -->
 <!-- if EasyAuth is not enabled, this filter is a noop -->
 <filter>
     <filter-name>EasyAuthFilter</filter-name>
-    <filter-class>com.microsoft.appservice.EasyAuthFilter</filter-class>
+    <filter-class>com.microsoft.azure.appservice.EasyAuthFilter</filter-class>
 </filter>
 
 <!-- The mapping for Azure AppService EasyAuth Filter -->
@@ -451,21 +450,6 @@
 </filter-mapping>
 
 <!-- END: Azure App Service EasyAuth -->
-
-<!-- BEGIN: App Insights -->
-
-<filter>
-    <filter-name>ApplicationInsightsWebFilter</filter-name>
-    <filter-class>com.microsoft.applicationinsights.web.internal.WebRequestTrackingFilter</filter-class>
-</filter>
-
-<filter-mapping>
-    <filter-name>ApplicationInsightsWebFilter</filter-name>
-    <url-pattern>*</url-pattern>
-</filter-mapping>
-
-<!-- END: App Insights -->
-
 
 <!-- ================== Built In Filter Definitions ===================== -->
 

@@ -429,7 +429,7 @@
 <!-- if EasyAuth is not enabled, this filter is a noop -->
 <filter>
     <filter-name>EasyAuthFilter</filter-name>
-    <filter-class>com.microsoft.appservice.EasyAuthFilter</filter-class>
+    <filter-class>com.microsoft.azure.appservice.EasyAuthFilter</filter-class>
 </filter>
 
 <!-- The mapping for Azure AppService EasyAuth Filter -->
@@ -440,19 +440,20 @@
 
 <!-- END: Azure App Service EasyAuth -->
 
-<!-- BEGIN: App Insights -->
+<!-- BEGIN: Azure App Service filter -->
 
 <filter>
-    <filter-name>ApplicationInsightsWebFilter</filter-name>
-    <filter-class>com.microsoft.applicationinsights.web.internal.WebRequestTrackingFilter</filter-class>
+    <filter-name>AppServiceFilter</filter-name>
+    <filter-class>com.microsoft.azure.appservice.filters.AppServiceFilter</filter-class>
 </filter>
 
+<!-- The mapping for Azure AppService Filter -->
 <filter-mapping>
-    <filter-name>ApplicationInsightsWebFilter</filter-name>
+    <filter-name>AppServiceFilter</filter-name>
     <url-pattern>*</url-pattern>
 </filter-mapping>
 
-<!-- END: App Insights -->
+<!-- END: Azure App Service filter -->
 
   <!-- ================== Built In Filter Definitions ===================== -->
 
