@@ -45,8 +45,8 @@ COPY context.xml /usr/local/tomcat/conf/context.xml
 COPY logging.properties /usr/local/tomcat/conf/logging.properties
 COPY web-easyauth.xml /usr/local/tomcat/conf/web.xml
 COPY tmp/shared/easyauth/azure.appservice.easyauth.jar /usr/local/tomcat/lib/
-COPY tmp/shared/easyauth/javax.json-api-1.0.jar /usr/local/tomcat/lib/
-COPY tmp/shared/easyauth/javax.json-1.0.4.jar /usr/local/tomcat/lib/
+COPY tmp/shared/appservice/azure.appservice.jar /usr/local/tomcat/lib/
+COPY tmp/shared/tomcat/bin/setenv.sh /usr/local/tomcat/bin/
 
 EXPOSE 80 2222
 

@@ -18,8 +18,8 @@
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
-                      http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-  version="4.0">
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+  version="3.1">
 
   <!-- ======================== Introduction ============================== -->
   <!-- This document defines default values for *all* web applications      -->
@@ -47,11 +47,6 @@
   <!--                                                                      -->
   <!--   fileEncoding        Encoding to be used to read static resources   -->
   <!--                       [platform default]                             -->
-  <!--                                                                      -->
-  <!--   useBomIfPresent     If a static file contains a byte order mark    -->
-  <!--                       (BOM), should this be used to determine the    -->
-  <!--                       file encoding in preference to fileEncoding.   -->
-  <!--                       [true]                                         -->
   <!--                                                                      -->
   <!--   input               Input buffer size (in bytes) when reading      -->
   <!--                       resources to be served.  [2048]                -->
@@ -143,9 +138,9 @@
   <!--                       pages.  See the jasper documentation for more  -->
   <!--                       information.                                   -->
   <!--                                                                      -->
-  <!--   compilerSourceVM    Compiler source VM. [1.8]                      -->
+  <!--   compilerSourceVM    Compiler source VM. [1.7]                      -->
   <!--                                                                      -->
-  <!--   compilerTargetVM    Compiler target VM. [1.8]                      -->
+  <!--   compilerTargetVM    Compiler target VM. [1.7]                      -->
   <!--                                                                      -->
   <!--   development         Is Jasper used in development mode? If true,   -->
   <!--                       the frequency at which JSPs are checked for    -->
@@ -238,13 +233,7 @@
   <!--                       debugging be suppressed?  [false]              -->
   <!--                                                                      -->
   <!--   trimSpaces          Should template text that consists entirely of -->
-  <!--                       whitespace be removed from the output (true),  -->
-  <!--                       replaced with a single space (single) or left  -->
-  <!--                       unchanged (false)? Note that if a JSP page or  -->
-  <!--                       tag file specifies a trimDirectiveWhitespaces  -->
-  <!--                       value of true, that will take precedence over  -->
-  <!--                       this configuration setting for that page/tag.  -->
-  <!--                       [false]                                        -->
+  <!--                       whitespace be removed from the output? [false] -->
   <!--                                                                      -->
   <!--   xpoweredBy          Determines whether X-Powered-By response       -->
   <!--                       header is added by generated servlet.  [false] -->
@@ -349,7 +338,7 @@
   <!--   enableCmdLineArguments                                             -->
   <!--                        Are command line parameters generated from    -->
   <!--                        the query string as per section 4.4 of 3875   -->
-  <!--                        RFC? [false]                                  -->
+  <!--                        RFC? [true]                                   -->
   <!--                                                                      -->
   <!--   executable           Name of the executable used to run the        -->
   <!--                        script. [perl]                                -->
@@ -434,14 +423,13 @@
     </servlet-mapping>
 -->
 
-
 <!-- BEGIN: Azure App Service EasyAuth -->
 
 <!-- A filter that hydrates the Azure App Service EasyAuth security context -->
 <!-- if EasyAuth is not enabled, this filter is a noop -->
 <filter>
     <filter-name>EasyAuthFilter</filter-name>
-    <filter-class>com.microsoft.appservice.EasyAuthFilter</filter-class>
+    <filter-class>com.microsoft.azure.appservice.EasyAuthFilter</filter-class>
 </filter>
 
 <!-- The mapping for Azure AppService EasyAuth Filter -->
@@ -451,6 +439,21 @@
 </filter-mapping>
 
 <!-- END: Azure App Service EasyAuth -->
+
+<!-- BEGIN: Azure App Service filter -->
+
+<filter>
+    <filter-name>AppServiceFilter</filter-name>
+    <filter-class>com.microsoft.azure.appservice.filters.AppServiceFilter</filter-class>
+</filter>
+
+<!-- The mapping for Azure AppService Filter -->
+<filter-mapping>
+    <filter-name>AppServiceFilter</filter-name>
+    <url-pattern>*</url-pattern>
+</filter-mapping>
+
+<!-- END: Azure App Service filter -->
 
 <!-- BEGIN: App Insights -->
 
@@ -466,8 +469,7 @@
 
 <!-- END: App Insights -->
 
-
-<!-- ================== Built In Filter Definitions ===================== -->
+  <!-- ================== Built In Filter Definitions ===================== -->
 
   <!-- A filter that sets various security related HTTP Response headers.   -->
   <!-- This filter supports the following initialization parameters         -->
