@@ -51,3 +51,4 @@ COPY tmp/shared/tomcat/bin/setenv.sh /usr/local/tomcat/bin/
 EXPOSE 80 2222
 
 ENTRYPOINT ["/bin/init_container.sh"]
+

@@ -1,11 +1,11 @@
-ARG BASE_IMAGE=mcr.microsoft.com/java/jre-headless:8u202-zulu-alpine
+ARG BASE_IMAGE=__PLACEHOLDER_BASEIMAGE__
 FROM $BASE_IMAGE
 
 LABEL maintainer="Azure App Services Container Images <appsvc-images@microsoft.com>"
 
-ENV AI_VERSION 2.1.2
-ENV TOMCAT_VERSION 9.0.13
-ENV TOMCAT_MAJOR 9
+ENV AI_VERSION __PLACEHOLDER_AI_VERSION__
+ENV TOMCAT_VERSION __PLACEHOLDER_TOMCAT_VERSION__
+ENV TOMCAT_MAJOR __PLACEHOLDER_TOMCAT_MAJOR__
 
 ENV PORT 80
 ENV SSH_PORT 2222
@@ -51,4 +51,3 @@ COPY tmp/shared/tomcat/bin/setenv.sh /usr/local/tomcat/bin/
 EXPOSE 80 2222
 
 ENTRYPOINT ["/bin/init_container.sh"]
-
