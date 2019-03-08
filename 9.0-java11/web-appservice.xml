@@ -451,6 +451,21 @@
 
 <!-- END: Azure App Service EasyAuth -->
 
+<!-- BEGIN: Azure App Service filter -->
+
+<filter>
+    <filter-name>AppServiceFilter</filter-name>
+    <filter-class>com.microsoft.azure.appservice.filters.AppServiceFilter</filter-class>
+</filter>
+
+<!-- The mapping for Azure AppService Filter -->
+<filter-mapping>
+    <filter-name>AppServiceFilter</filter-name>
+    <url-pattern>*</url-pattern>
+</filter-mapping>
+
+<!-- END: Azure App Service filter -->
+
 <!-- ================== Built In Filter Definitions ===================== -->
 
   <!-- A filter that sets various security related HTTP Response headers.   -->

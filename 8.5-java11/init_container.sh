@@ -43,8 +43,8 @@ then
     cp -r /tmp/tomcat/webapps /home/site/wwwroot
 fi
 
-# WEBSITE_INSTANCE_ID will be defined uniquely for each worker instance while running in Azure.
 # During DevDelopment, define environment variables required for testing.
+# WEBSITE_INSTANCE_ID will be defined uniquely for each worker instance while running in Azure.
 if [ -z "$WEBSITE_INSTANCE_ID" ]
 then
     export WEBSITE_INSTANCE_ID=dev
