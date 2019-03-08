@@ -1,3 +1,6 @@
+################################################
+***DO NOT EDIT*** This is an auto-generated file
+################################################
 ARG BASE_IMAGE=mcr.microsoft.com/java/jre-headless:11u2-zulu-alpine
 FROM $BASE_IMAGE
 
@@ -51,4 +54,7 @@ COPY tmp/shared/tomcat/bin/setenv.sh /usr/local/tomcat/bin/
 EXPOSE 80 2222
 
 ENTRYPOINT ["/bin/init_container.sh"]
+################################################
+***DO NOT EDIT*** This is an auto-generated file
+################################################
 

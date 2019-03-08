@@ -64,6 +64,8 @@ function setup
             break
         }
     }
+    $headerFooter = "################################################`n***DO NOT EDIT*** This is an auto-generated file`n################################################`n"
+    $content = $headerFooter + $content + $headerFooter
     Set-Content -Value $content -Path $dockerFileOutPath
 }
 
