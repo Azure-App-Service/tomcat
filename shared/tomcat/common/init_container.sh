@@ -65,7 +65,7 @@ then
     echo "Initializing App Insights.."
     export CATALINA_OPTS=-javaagent:/usr/local/app_insights/aiagent/applicationinsights-agent-$AI_VERSION.jar $CATALINA_OPTS
     mv /usr/local/app_insights/tomcat_lib/* /usr/local/tomcat/lib/
-    mv /tmp/tomcat/conf/web-easyauth-ai.xml /usr/local/tomcat/conf/web.xml
+    mv /tmp/tomcat/conf/web-appservice-ai.xml /usr/local/tomcat/conf/web.xml
 else
     echo "Skipping App Insights initialization"
 fi
