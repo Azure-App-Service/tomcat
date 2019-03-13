@@ -43,7 +43,7 @@ then
     cp -r /tmp/tomcat/webapps /home/site/wwwroot
 fi
 
-# During DevDelopment, define environment variables required for testing.
+# During development, define environment variables required for testing.
 # WEBSITE_INSTANCE_ID will be defined uniquely for each worker instance while running in Azure.
 if [ -z "$WEBSITE_INSTANCE_ID" ]
 then
