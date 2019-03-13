@@ -89,7 +89,7 @@ export JAVA_OPTS="$JAVA_OPTS -Dport.http=$PORT"
 export JAVA_OPTS="$JAVA_OPTS -noverify"
 export JAVA_OPTS="$JAVA_OPTS -Dcatalina.instance.name=$WEBSITE_INSTANCE_ID"
 
-export _JAVA_OPTIONS="$_JAVA_OPTIONS -Djava.net.preferIPv4Stack=true"
+export JAVA_TOOL_OPTIONS="$JAVA_TOOL_OPTIONS -Djava.net.preferIPv4Stack=true"
 
 # END: Define JAVA OPTIONS
 
