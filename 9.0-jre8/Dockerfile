@@ -7,7 +7,7 @@ FROM $BASE_IMAGE
 LABEL maintainer="Azure App Services Container Images <appsvc-images@microsoft.com>"
 
 ENV AI_VERSION 2.1.2
-ENV TOMCAT_VERSION 9.0.13
+ENV TOMCAT_VERSION 9.0.16
 ENV TOMCAT_MAJOR 9
 
 ENV PORT 80
