@@ -7,7 +7,7 @@ FROM $BASE_IMAGE
 LABEL maintainer="Azure App Services Container Images <appsvc-images@microsoft.com>"
 
 ENV AI_VERSION 2.1.2
-ENV TOMCAT_VERSION 8.5.35
+ENV TOMCAT_VERSION 8.5.38
 ENV TOMCAT_MAJOR 8
 
 ENV PORT 80
@@ -31,6 +31,16 @@ COPY tmp/shared/app_insights/ApplicationInsights.xml /usr/local/app_insights/tom
 
 RUN apk add --update openssh-server bash openrc \
         && rm -rf /var/cache/apk/* \
+        # Remove unnecessary services
+        && rm -f /etc/init.d/hwdrivers \
+                 /etc/init.d/hwclock \
+                 /etc/init.d/mtab \
+                 /etc/init.d/bootmisc \
+                 /etc/init.d/modules \
+                 /etc/init.d/modules-load \
+                 /etc/init.d/modloop \
+        # Can't do cgroups
+        && sed -i 's/\tcgroup_add_service/\t#cgroup_add_service/g' /lib/rc/sh/openrc-run.sh \
         && echo "root:Docker!" | chpasswd \
         && wget -O /tmp/apache-tomcat-$TOMCAT_VERSION.tar.gz https://archive.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz --no-verbose \
         && tar xvzf /tmp/apache-tomcat-$TOMCAT_VERSION.tar.gz -C /tmp \

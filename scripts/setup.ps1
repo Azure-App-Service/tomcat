@@ -24,7 +24,7 @@ function setup
             $content = ((Get-Content -path $dockerFileTemplatePath -Raw) `
                 -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:8u202-zulu-alpine') `
                 -replace '__PLACEHOLDER_AI_VERSION__','2.1.2' `
-                -replace '__PLACEHOLDER_TOMCAT_VERSION__','8.5.35' `
+                -replace '__PLACEHOLDER_TOMCAT_VERSION__','8.5.38' `
                 -replace '__PLACEHOLDER_TOMCAT_MAJOR__','8' `
                 -replace '__PLACEHOLDER_TOMCAT_MAJOR_MINOR__', '8.5'
             break
@@ -35,7 +35,7 @@ function setup
             $content = ((Get-Content -path $dockerFileTemplatePath -Raw) `
                 -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:11u2-zulu-alpine') `
                 -replace '__PLACEHOLDER_AI_VERSION__','2.1.2' `
-                -replace '__PLACEHOLDER_TOMCAT_VERSION__','8.5.35' `
+                -replace '__PLACEHOLDER_TOMCAT_VERSION__','8.5.38' `
                 -replace '__PLACEHOLDER_TOMCAT_MAJOR__','8' `
                 -replace '__PLACEHOLDER_TOMCAT_MAJOR_MINOR__', '8.5' 
             break
@@ -46,7 +46,7 @@ function setup
             $content = ((Get-Content -path $dockerFileTemplatePath -Raw) `
                 -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:8u202-zulu-alpine') `
                 -replace '__PLACEHOLDER_AI_VERSION__','2.1.2' `
-                -replace '__PLACEHOLDER_TOMCAT_VERSION__','9.0.13' `
+                -replace '__PLACEHOLDER_TOMCAT_VERSION__','9.0.16' `
                 -replace '__PLACEHOLDER_TOMCAT_MAJOR__','9' `
                 -replace '__PLACEHOLDER_TOMCAT_MAJOR_MINOR__', '9.0'
             break
@@ -57,7 +57,7 @@ function setup
             $content = ((Get-Content -path $dockerFileTemplatePath -Raw) `
                 -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:11u2-zulu-alpine') `
                 -replace '__PLACEHOLDER_AI_VERSION__','2.1.2' `
-                -replace '__PLACEHOLDER_TOMCAT_VERSION__','9.0.13' `
+                -replace '__PLACEHOLDER_TOMCAT_VERSION__','9.0.16' `
                 -replace '__PLACEHOLDER_TOMCAT_MAJOR__','9' `
                 -replace '__PLACEHOLDER_TOMCAT_MAJOR_MINOR__', '9.0'
             break

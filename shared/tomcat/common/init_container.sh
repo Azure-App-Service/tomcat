@@ -43,7 +43,7 @@ then
     cp -r /tmp/tomcat/webapps /home/site/wwwroot
 fi
 
-# During DevDelopment, define environment variables required for testing.
+# During development, define environment variables required for testing.
 # WEBSITE_INSTANCE_ID will be defined uniquely for each worker instance while running in Azure.
 if [ -z "$WEBSITE_INSTANCE_ID" ]
 then
@@ -89,13 +89,16 @@ export JAVA_OPTS="$JAVA_OPTS -Dport.http=$PORT"
 export JAVA_OPTS="$JAVA_OPTS -noverify"
 export JAVA_OPTS="$JAVA_OPTS -Dcatalina.instance.name=$WEBSITE_INSTANCE_ID"
 
-export _JAVA_OPTIONS="$_JAVA_OPTIONS -Djava.net.preferIPv4Stack=true"
+export JAVA_TOOL_OPTIONS="$JAVA_TOOL_OPTIONS -Djava.net.preferIPv4Stack=true"
 
 # END: Define JAVA OPTIONS
 
 # BEGIN: Configure /etc/profile
 
 eval $(printenv | sed -n "s/^\([^=]\+\)=\(.*\)$/export \1=\2/p" | sed 's/"/\\\"/g' | sed '/=/s//="/' | sed 's/$/"/' >> /etc/profile)
+
+# We want all ssh sesions to start in the /home directory
+echo "cd /home" >> /etc/profile
 
 # END: Configure /etc/profile
 
