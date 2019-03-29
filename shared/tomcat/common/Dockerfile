@@ -1,11 +1,16 @@
 ARG BASE_IMAGE=__PLACEHOLDER_BASEIMAGE__
+ARG GIT_COMMIT=unspecified
 FROM $BASE_IMAGE
+
+# Re-define ARG to make the build argument available for use in the rest of the Dockerfile
+ARG GIT_COMMIT
 
 LABEL maintainer="Azure App Services Container Images <appsvc-images@microsoft.com>"
 
 ENV AI_VERSION __PLACEHOLDER_AI_VERSION__
 ENV TOMCAT_VERSION __PLACEHOLDER_TOMCAT_VERSION__
 ENV TOMCAT_MAJOR __PLACEHOLDER_TOMCAT_MAJOR__
+ENV GIT_COMMIT $GIT_COMMIT
 
 ENV PORT 80
 ENV SSH_PORT 2222
