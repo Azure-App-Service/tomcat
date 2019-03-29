@@ -1,7 +1,7 @@
 ########################################################
 ### ***DO NOT EDIT*** This is an auto-generated file ###
 ########################################################
-ARG BASE_IMAGE=mcr.microsoft.com/java/jre-headless:8u202-zulu-alpine
+ARG BASE_IMAGE=mcr.microsoft.com/java/jre-headless:8u202-zulu-alpine-with-tools
 ARG GIT_COMMIT=unspecified
 FROM $BASE_IMAGE
 
@@ -11,7 +11,7 @@ ARG GIT_COMMIT
 LABEL maintainer="Azure App Services Container Images <appsvc-images@microsoft.com>"
 
 ENV AI_VERSION 2.1.2
-ENV TOMCAT_VERSION 8.5.38
+ENV TOMCAT_VERSION 8.5.39
 ENV TOMCAT_MAJOR 8
 ENV GIT_COMMIT $GIT_COMMIT
 
