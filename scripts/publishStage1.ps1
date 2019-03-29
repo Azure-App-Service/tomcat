@@ -22,10 +22,15 @@ function Build
     .\scripts\setup.ps1 -version $version
 
     $image = GetImage -version $version -timestamp $timestamp
+    $gitcommit=(git log -1 --pretty=%H)
 
     Write-Host -ForegroundColor Green Building $image
-    Write-Host -ForegroundColor Green docker build --no-cache -t $image $directory
-    docker build --no-cache -t $image $version
+
+    $buildcmd = "docker build --no-cache --build-arg GIT_COMMIT=$gitcommit -t $image $directory"
+    Write-Host -ForegroundColor Green $buildcmd
+
+    # Run the build command
+    Invoke-Expression -Command $buildcmd
 }
 
 function Publish
@@ -71,4 +76,3 @@ Publish -version '8.5-jre8' -timestamp $timestamp
 Publish -version '9.0-jre8' -timestamp $timestamp
 Publish -version '8.5-java11' -timestamp $timestamp
 Publish -version '9.0-java11' -timestamp $timestamp
-
