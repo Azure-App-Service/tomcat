@@ -44,12 +44,12 @@ function Publish
     $image2 = GetImage -version $version -timestamp $timestamp2
 
     Write-Host -ForegroundColor Green **Pushing** $image1
-    #docker push $image1
+    docker push $image1
 
     docker tag $image1 $image2
 
     Write-Host -ForegroundColor Green **Pushing** $image2
-    #docker push $image2
+    docker push $image2
 }
 
 
