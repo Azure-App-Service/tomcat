@@ -60,7 +60,7 @@ fi
 # BEGIN: Configure App Insights
 
 # Inject App Insights artefcats into Tomcat, if APPINSIGHTS_INSTRUMENTATIONKEY is set to a non-empty value
-if [[ ! -z $APPINSIGHTS_INSTRUMENTATIONKEY ]]
+if [[ ! -z $APPINSIGHTS_INSTRUMENTATIONKEY && "$APPINSIGHTS_ENABLED" == "1" ]]
 then
     echo "Initializing App Insights.."
     export CATALINA_OPTS=-javaagent:/usr/local/app_insights/aiagent/applicationinsights-agent-$AI_VERSION.jar $CATALINA_OPTS
