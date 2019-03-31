@@ -63,7 +63,7 @@ fi
 if [[ ! -z $APPINSIGHTS_INSTRUMENTATIONKEY && "$APPINSIGHTS_ENABLED" == "1" ]]
 then
     echo "Initializing App Insights.."
-    export CATALINA_OPTS=-javaagent:/usr/local/app_insights/aiagent/applicationinsights-agent-$AI_VERSION.jar $CATALINA_OPTS
+    export CATALINA_OPTS="-javaagent:/usr/local/app_insights/aiagent/applicationinsights-agent-$AI_VERSION.jar $CATALINA_OPTS"
     mv /usr/local/app_insights/tomcat_lib/* /usr/local/tomcat/lib/
     mv /tmp/tomcat/conf/web-appservice-ai.xml /usr/local/tomcat/conf/web.xml
 else
