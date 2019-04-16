@@ -43,18 +43,19 @@ then
     cp -r /tmp/tomcat/webapps /home/site/wwwroot
 fi
 
-# During development, define environment variables required for testing.
-# WEBSITE_INSTANCE_ID will be defined uniquely for each worker instance while running in Azure.
-if [ -z "$WEBSITE_INSTANCE_ID" ]
+# COMPUTERNAME will be defined uniquely for each worker instance while running in Azure.
+# If COMPUTERNAME isn't available, we assume that the container is running in a dev environment.
+# If running in dev environment, define required environment variables.
+if [ -z "$COMPUTERNAME" ]
 then
-    export WEBSITE_INSTANCE_ID=dev
-    
-    # BEGIN: Set the Env variables required to test AzMon
+    export COMPUTERNAME=dev
+
+    # BEGIN: AzMon related environment variables
     export HTTP_LOGGING_ENABLED=1
     export WEBSITE_HOSTNAME=dev.appservice.com
     export APPSETTING_WEBSITE_AZMON_ENABLED=True
     export DIAGNOSTIC_LOGS_MOUNT_PATH=/var/log/diagnosticLogs
-    # END: Set the Env variables required to test AzMon
+    # END: AzMon related environment variables
 fi
 
 # BEGIN: Configure App Insights
@@ -87,7 +88,7 @@ export JAVA_OPTS="$JAVA_OPTS -Dsite.home=/home"
 export JAVA_OPTS="$JAVA_OPTS -Dsite.tempdir=/tmp"
 export JAVA_OPTS="$JAVA_OPTS -Dport.http=$PORT"
 export JAVA_OPTS="$JAVA_OPTS -noverify"
-export JAVA_OPTS="$JAVA_OPTS -Dcatalina.instance.name=$WEBSITE_INSTANCE_ID"
+export JAVA_OPTS="$JAVA_OPTS -Dcatalina.instance.name=$COMPUTERNAME"
 
 export JAVA_TOOL_OPTIONS="$JAVA_TOOL_OPTIONS -Djava.net.preferIPv4Stack=true"
 
