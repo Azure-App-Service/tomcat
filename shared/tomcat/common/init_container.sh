@@ -137,10 +137,13 @@ echo STARTUP_COMMAND=$STARTUP_COMMAND
 # We first fix the EOL characters in it and then run it
 if [ -n "$STARTUP_FILE" ]
 then
+
+    # Copy startup file to a temporary location and fix the EOL characters in the temp file (to avoid changing the original copy)
     TMP_STARTUP_FILE=/tmp/startup.sh
-    echo Copying $STARTUP_FILE to $TMP_STARTUP_FILE
-    # Convert EOL to Unix-style
-    cat $STARTUP_FILE | tr '\r' '\n' > $TMP_STARTUP_FILE
+    echo Copying $STARTUP_FILE to $TMP_STARTUP_FILE and fixing EOL characters in $TMP_STARTUP_FILE
+    cp $STARTUP_FILE $TMP_STARTUP_FILE
+    dos2unix $TMP_STARTUP_FILE
+    
     echo Running STARTUP_FILE: $TMP_STARTUP_FILE
     source $TMP_STARTUP_FILE
     echo Finished running startup file $TMP_STARTUP_FILE
