@@ -26,7 +26,7 @@ function Build
 
     Write-Host -ForegroundColor Green Building $image
 
-    $buildcmd = "docker build --no-cache --build-arg GIT_COMMIT=$gitcommit -t $image $directory"
+    $buildcmd = "docker build --pull --no-cache --build-arg GIT_COMMIT=$gitcommit -t $image $directory"
     Write-Host -ForegroundColor Green $buildcmd
 
     # Run the build command
