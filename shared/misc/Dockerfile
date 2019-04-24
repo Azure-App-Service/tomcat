@@ -24,11 +24,10 @@ RUN rm -rf /usr/local/tomcat/webapps/
 # Remove the artifacts created by the base Java image, as we know we don't need them
 RUN rm -rf /tmp/webapps/
 
-COPY tmp/shared/tomcat/common/init_container.sh /bin/init_container.sh
+COPY tmp/shared/misc/init_container.sh /bin/init_container.sh
 COPY tmp/shared/tomcat/__PLACEHOLDER_TOMCAT_MAJOR_MINOR__/web-appservice-ai.xml /tmp/tomcat/conf/web-appservice-ai.xml
-COPY tmp/shared/tomcat/common/index.jsp /tmp/tomcat/webapps/ROOT/index.jsp
-COPY tmp/shared/tomcat/common/background.png /tmp/tomcat/webapps/ROOT/background.png
-COPY tmp/shared/tomcat/common/sshd_config /etc/ssh/
+COPY tmp/shared/misc/index.jsp /tmp/tomcat/webapps/ROOT/index.jsp
+COPY tmp/shared/misc/sshd_config /etc/ssh/
 COPY tmp/shared/app_insights/AI-Agent.xml /usr/local/app_insights/aiagent/
 COPY tmp/shared/app_insights/ApplicationInsights.xml /usr/local/app_insights/tomcat_lib/
 
@@ -62,7 +61,7 @@ COPY tmp/shared/tomcat/__PLACEHOLDER_TOMCAT_MAJOR_MINOR__/logging.properties /us
 COPY tmp/shared/tomcat/__PLACEHOLDER_TOMCAT_MAJOR_MINOR__/web-appservice.xml /usr/local/tomcat/conf/web.xml
 COPY tmp/shared/easyauth/azure.appservice.easyauth.jar /usr/local/tomcat/lib/
 COPY tmp/shared/appservice/azure.appservice.jar /usr/local/tomcat/lib/
-COPY tmp/shared/tomcat/bin/setenv.sh /usr/local/tomcat/bin/
+COPY tmp/shared/tomcat/common/setenv.sh /usr/local/tomcat/bin/
 
 EXPOSE 80 2222
 

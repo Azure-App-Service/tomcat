@@ -12,7 +12,7 @@ function setup
     # Copy the shared files to the target directory
     copy-item -recurse shared $dirpath
     
-    $dockerFileTemplatePath = '.\shared\tomcat\common\Dockerfile'
+    $dockerFileTemplatePath = '.\shared\misc\Dockerfile'
     $dockerFileOutPath = "$version\Dockerfile"
 
     # Generate the Dockerfile from the template and place it in the target directory
