@@ -22,7 +22,7 @@ function setup
         '8.5-jre8'
         {
             $content = ((Get-Content -path $dockerFileTemplatePath -Raw) `
-                -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:8u202-zulu-alpine-with-tools') `
+                -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:8u212-zulu-alpine-with-tools') `
                 -replace '__PLACEHOLDER_AI_VERSION__','2.1.2' `
                 -replace '__PLACEHOLDER_APPINSIGHTS_ENABLED__','1' `
                 -replace '__PLACEHOLDER_TOMCAT_VERSION__','8.5.39' `
@@ -34,7 +34,7 @@ function setup
         '8.5-java11'
         {
             $content = ((Get-Content -path $dockerFileTemplatePath -Raw) `
-                -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:11u2-zulu-alpine-with-tools') `
+                -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:11u3-zulu-alpine-with-tools') `
                 -replace '__PLACEHOLDER_AI_VERSION__','2.1.2' `
                 -replace '__PLACEHOLDER_APPINSIGHTS_ENABLED__','0' `
                 -replace '__PLACEHOLDER_TOMCAT_VERSION__','8.5.39' `
@@ -46,7 +46,7 @@ function setup
         '9.0-jre8'
         {
             $content = ((Get-Content -path $dockerFileTemplatePath -Raw) `
-                -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:8u202-zulu-alpine-with-tools') `
+                -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:8u212-zulu-alpine-with-tools') `
                 -replace '__PLACEHOLDER_AI_VERSION__','2.1.2' `
                 -replace '__PLACEHOLDER_APPINSIGHTS_ENABLED__','1' `
                 -replace '__PLACEHOLDER_TOMCAT_VERSION__','9.0.17' `
@@ -58,7 +58,7 @@ function setup
         '9.0-java11'
         {
             $content = ((Get-Content -path $dockerFileTemplatePath -Raw) `
-                -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:11u2-zulu-alpine-with-tools') `
+                -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:11u3-zulu-alpine-with-tools') `
                 -replace '__PLACEHOLDER_AI_VERSION__','2.1.2' `
                 -replace '__PLACEHOLDER_APPINSIGHTS_ENABLED__','0' `
                 -replace '__PLACEHOLDER_TOMCAT_VERSION__','9.0.17' `

@@ -1,7 +1,7 @@
 ########################################################
 ### ***DO NOT EDIT*** This is an auto-generated file ###
 ########################################################
-ARG BASE_IMAGE=mcr.microsoft.com/java/jre-headless:8u202-zulu-alpine-with-tools
+ARG BASE_IMAGE=mcr.microsoft.com/java/jre-headless:8u212-zulu-alpine-with-tools
 ARG GIT_COMMIT=unspecified
 FROM $BASE_IMAGE
 
