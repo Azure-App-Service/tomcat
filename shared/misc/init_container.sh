@@ -37,10 +37,12 @@ then
     export CATALINA_BASE=
 fi
 
+# If no app is published at /home/site/wwwroot/webapps, use the parking page app
 if [ ! -d /home/site/wwwroot/webapps ]
 then
-    mkdir -p /home/site/wwwroot
-    cp -r /tmp/tomcat/webapps /home/site/wwwroot
+    cp -r /tmp/tomcat/webapps /usr/local/tomcat/webapps
+else
+    cp -r /home/site/wwwroot/webapps /usr/local/tomcat/webapps
 fi
 
 # COMPUTERNAME will be defined uniquely for each worker instance while running in Azure.
