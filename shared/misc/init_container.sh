@@ -24,6 +24,9 @@ sed -i "s/SSH_PORT/$SSH_PORT/g" /etc/ssh/sshd_config
 echo Starting ssh service...
 rc-service sshd start
 
+# Enable case-insensitive string matching
+shopt -s nocasematch
+
 # Default to CATALINA_BASE=/home/tomcat
 if [[ -z $CATALINA_BASE && -a /home/tomcat/conf/server.xml ]]
 then
@@ -37,12 +40,22 @@ then
     export CATALINA_BASE=
 fi
 
-# If no app is published at /home/site/wwwroot/webapps, use the parking page app
+# If no app is published at /home/site/wwwroot/webapps, use the parking page app.
+# If an app is published, the default behavior is to copy the app to a local location, unless:
+# 1. WEBSITE_SKIP_LOCAL_COPY is defined to 1 or TRUE, OR,
+# 2. Local cache is enabled, in which case making a local copy again is unnecessary.
 if [ ! -d /home/site/wwwroot/webapps ]
 then
-    cp -r /tmp/tomcat/webapps /usr/local/tomcat/webapps
+    SITEROOT=/tmp/tomcat/webapps
+    echo "Using parking page app with SITEROOT=$SITEROOT"
+elif [[ "$WEBSITE_LOCAL_CACHE_OPTION" = "Always" || "$WEBSITE_SKIP_LOCAL_COPY" = "1"  || "$WEBSITE_SKIP_LOCAL_COPY" = "true" ]]
+then
+    SITEROOT=/home/site/wwwroot/webapps
+    echo "No local copy needed. SITEROOT=$SITEROOT"
 else
-    cp -r /home/site/wwwroot/webapps /usr/local/tomcat/webapps
+    SITEROOT=/usr/local/tomcat/webapps
+    cp -r /home/site/wwwroot/webapps $SITEROOT
+    echo "Made a local copy of the app and using SITEROOT=$SITEROOT"
 fi
 
 # COMPUTERNAME will be defined uniquely for each worker instance while running in Azure.
@@ -86,7 +99,7 @@ export JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.config.file=/usr/local/tomcat/c
 export JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
 export JAVA_OPTS="$JAVA_OPTS -Dsite.logdir=/home/LogFiles"
 export JAVA_OPTS="$JAVA_OPTS -Dsite.azMonlogdir=$DIAGNOSTIC_LOGS_MOUNT_PATH"
-export JAVA_OPTS="$JAVA_OPTS -Dsite.home=/home"
+export JAVA_OPTS="$JAVA_OPTS -Dsite.root=$SITEROOT"
 export JAVA_OPTS="$JAVA_OPTS -Dsite.tempdir=/tmp"
 export JAVA_OPTS="$JAVA_OPTS -Dport.http=$PORT"
 export JAVA_OPTS="$JAVA_OPTS -noverify"
