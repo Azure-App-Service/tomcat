@@ -159,7 +159,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="${site.logdir}/http/RawLogs"
                prefix="site_access_log.${catalina.instance.name}" suffix=".txt"
-               pattern="%h %l %u %t &quot;%r&quot; %s %b %D" />
+               pattern="%h %l %u %t &quot;%r&quot; %s %b %D %{x-arr-log-id}i" />
 
       </Host>
     </Engine>
