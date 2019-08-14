@@ -1,14 +1,20 @@
 ########################################################
 ### ***DO NOT EDIT*** This is an auto-generated file ###
 ########################################################
-ARG BASE_IMAGE=mcr.microsoft.com/java/jre-headless:11u2-zulu-alpine
+ARG BASE_IMAGE=mcr.microsoft.com/java/jre-headless:11u3-zulu-alpine-with-tools
+ARG GIT_COMMIT=unspecified
 FROM $BASE_IMAGE
+
+# Re-define ARG to make the build argument available for use in the rest of the Dockerfile
+ARG GIT_COMMIT
 
 LABEL maintainer="Azure App Services Container Images <appsvc-images@microsoft.com>"
 
 ENV AI_VERSION 2.1.2
-ENV TOMCAT_VERSION 8.5.38
+ENV TOMCAT_VERSION 8.5.41
 ENV TOMCAT_MAJOR 8
+ENV GIT_COMMIT $GIT_COMMIT
+ENV APPINSIGHTS_ENABLED 0
 
 ENV PORT 80
 ENV SSH_PORT 2222
@@ -21,11 +27,10 @@ RUN rm -rf /usr/local/tomcat/webapps/
 # Remove the artifacts created by the base Java image, as we know we don't need them
 RUN rm -rf /tmp/webapps/
 
-COPY tmp/shared/tomcat/common/init_container.sh /bin/init_container.sh
+COPY tmp/shared/misc/init_container.sh /bin/init_container.sh
 COPY tmp/shared/tomcat/8.5/web-appservice-ai.xml /tmp/tomcat/conf/web-appservice-ai.xml
-COPY tmp/shared/tomcat/common/index.jsp /tmp/tomcat/webapps/ROOT/index.jsp
-COPY tmp/shared/tomcat/common/background.png /tmp/tomcat/webapps/ROOT/background.png
-COPY tmp/shared/tomcat/common/sshd_config /etc/ssh/
+COPY tmp/shared/misc/index.jsp /tmp/tomcat/webapps/ROOT/index.jsp
+COPY tmp/shared/misc/sshd_config /etc/ssh/
 COPY tmp/shared/app_insights/AI-Agent.xml /usr/local/app_insights/aiagent/
 COPY tmp/shared/app_insights/ApplicationInsights.xml /usr/local/app_insights/tomcat_lib/
 
@@ -59,7 +64,7 @@ COPY tmp/shared/tomcat/8.5/logging.properties /usr/local/tomcat/conf/logging.pro
 COPY tmp/shared/tomcat/8.5/web-appservice.xml /usr/local/tomcat/conf/web.xml
 COPY tmp/shared/easyauth/azure.appservice.easyauth.jar /usr/local/tomcat/lib/
 COPY tmp/shared/appservice/azure.appservice.jar /usr/local/tomcat/lib/
-COPY tmp/shared/tomcat/bin/setenv.sh /usr/local/tomcat/bin/
+COPY tmp/shared/tomcat/common/setenv.sh /usr/local/tomcat/bin/
 
 EXPOSE 80 2222
 

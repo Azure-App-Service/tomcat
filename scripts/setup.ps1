@@ -2,17 +2,12 @@ function setup
 {
 	param([string]$version)
 
-    # Remove tmp directory
-	$dirpath = $version + '/tmp/shared'
-	If (Test-Path $dirpath)
-	{
-		remove-item -recurse -force $dirpath
-	}
+    $tmpDirRootPath = $version + '/tmp'
 
     # Copy the shared files to the target directory
-    copy-item -recurse shared $dirpath
+    copy-item -Force -recurse shared "$tmpDirRootPath/shared"
     
-    $dockerFileTemplatePath = '.\shared\tomcat\common\Dockerfile'
+    $dockerFileTemplatePath = '.\shared\misc\Dockerfile'
     $dockerFileOutPath = "$version\Dockerfile"
 
     # Generate the Dockerfile from the template and place it in the target directory
@@ -22,9 +17,10 @@ function setup
         '8.5-jre8'
         {
             $content = ((Get-Content -path $dockerFileTemplatePath -Raw) `
-                -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:8u202-zulu-alpine') `
+                -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:8u212-zulu-alpine-with-tools') `
                 -replace '__PLACEHOLDER_AI_VERSION__','2.1.2' `
-                -replace '__PLACEHOLDER_TOMCAT_VERSION__','8.5.38' `
+                -replace '__PLACEHOLDER_APPINSIGHTS_ENABLED__','1' `
+                -replace '__PLACEHOLDER_TOMCAT_VERSION__','8.5.41' `
                 -replace '__PLACEHOLDER_TOMCAT_MAJOR__','8' `
                 -replace '__PLACEHOLDER_TOMCAT_MAJOR_MINOR__', '8.5'
             break
@@ -33,9 +29,10 @@ function setup
         '8.5-java11'
         {
             $content = ((Get-Content -path $dockerFileTemplatePath -Raw) `
-                -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:11u2-zulu-alpine') `
+                -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:11u3-zulu-alpine-with-tools') `
                 -replace '__PLACEHOLDER_AI_VERSION__','2.1.2' `
-                -replace '__PLACEHOLDER_TOMCAT_VERSION__','8.5.38' `
+                -replace '__PLACEHOLDER_APPINSIGHTS_ENABLED__','0' `
+                -replace '__PLACEHOLDER_TOMCAT_VERSION__','8.5.41' `
                 -replace '__PLACEHOLDER_TOMCAT_MAJOR__','8' `
                 -replace '__PLACEHOLDER_TOMCAT_MAJOR_MINOR__', '8.5' 
             break
@@ -44,9 +41,10 @@ function setup
         '9.0-jre8'
         {
             $content = ((Get-Content -path $dockerFileTemplatePath -Raw) `
-                -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:8u202-zulu-alpine') `
+                -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:8u212-zulu-alpine-with-tools') `
                 -replace '__PLACEHOLDER_AI_VERSION__','2.1.2' `
-                -replace '__PLACEHOLDER_TOMCAT_VERSION__','9.0.16' `
+                -replace '__PLACEHOLDER_APPINSIGHTS_ENABLED__','1' `
+                -replace '__PLACEHOLDER_TOMCAT_VERSION__','9.0.20' `
                 -replace '__PLACEHOLDER_TOMCAT_MAJOR__','9' `
                 -replace '__PLACEHOLDER_TOMCAT_MAJOR_MINOR__', '9.0'
             break
@@ -55,9 +53,10 @@ function setup
         '9.0-java11'
         {
             $content = ((Get-Content -path $dockerFileTemplatePath -Raw) `
-                -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:11u2-zulu-alpine') `
+                -replace '__PLACEHOLDER_BASEIMAGE__','mcr.microsoft.com/java/jre-headless:11u3-zulu-alpine-with-tools') `
                 -replace '__PLACEHOLDER_AI_VERSION__','2.1.2' `
-                -replace '__PLACEHOLDER_TOMCAT_VERSION__','9.0.16' `
+                -replace '__PLACEHOLDER_APPINSIGHTS_ENABLED__','0' `
+                -replace '__PLACEHOLDER_TOMCAT_VERSION__','9.0.20' `
                 -replace '__PLACEHOLDER_TOMCAT_MAJOR__','9' `
                 -replace '__PLACEHOLDER_TOMCAT_MAJOR_MINOR__', '9.0'
             break

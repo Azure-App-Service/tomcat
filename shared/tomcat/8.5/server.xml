@@ -72,6 +72,7 @@
                connectionTimeout="20000"
                redirectPort="8443"
                compression="on"
+               URIEncoding="UTF-8"
                maxHttpHeaderSize="16384" />
     <!-- A "Connector" using the shared thread pool-->
     <!--
