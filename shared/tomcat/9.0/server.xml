@@ -145,7 +145,7 @@
                resourceName="UserDatabase"/>
       </Realm>
 
-      <Host name="localhost" appBase="${site.home}/site/wwwroot/webapps" xmlBase="${site.home}/site/wwwroot/"
+      <Host name="localhost" appBase="${site.root}"
             unpackWARs="false" autoDeploy="true" workDir="${site.tempdir}">
 
         <!-- SingleSignOn valve, share authentication between web applications

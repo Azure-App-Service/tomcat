@@ -21,9 +21,6 @@ ENV PATH /usr/local/tomcat/bin:$PATH
 # Remove the sample webapps provided by Tomcat
 RUN rm -rf /usr/local/tomcat/webapps/
 
-# Remove the artifacts created by the base Java image, as we know we don't need them
-RUN rm -rf /tmp/webapps/
-
 COPY tmp/shared/misc/init_container.sh /bin/init_container.sh
 COPY tmp/shared/tomcat/__PLACEHOLDER_TOMCAT_MAJOR_MINOR__/web-appservice-ai.xml /tmp/tomcat/conf/web-appservice-ai.xml
 COPY tmp/shared/misc/index.jsp /tmp/tomcat/webapps/ROOT/index.jsp

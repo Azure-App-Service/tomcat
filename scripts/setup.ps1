@@ -1,11 +1,16 @@
 function setup
 {
-	param([string]$version)
+    param([string]$version)
 
-    $tmpDirRootPath = $version + '/tmp'
+    # Remove tmp directory
+    $dirpath = $version + '/tmp/shared'
+    If (Test-Path $dirpath)
+    {
+        remove-item -recurse -force $dirpath
+    }
 
     # Copy the shared files to the target directory
-    copy-item -Force -recurse shared "$tmpDirRootPath/shared"
+    copy-item -recurse shared "$dirpath"
     
     $dockerFileTemplatePath = '.\shared\misc\Dockerfile'
     $dockerFileOutPath = "$version\Dockerfile"
